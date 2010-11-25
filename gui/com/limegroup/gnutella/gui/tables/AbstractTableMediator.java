@@ -25,9 +25,12 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -458,6 +461,14 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         corner.setBackground(TABLE.getTableHeader().getBackground());
         corner.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         SCROLL_PANE.setCorner(JScrollPane.UPPER_RIGHT_CORNER, corner);
+        
+        SCROLL_PANE.getViewport().addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				JViewport bar = (JViewport) e.getSource();
+				bar.repaint(bar.getViewRect());
+			}
+		});
+        
         tablePane.add(SCROLL_PANE);
 
         TABLE_PANE = tablePane;
