@@ -28,7 +28,7 @@
 	</classpathentry>
 	<classpathentry excluding="macosx/|plugins/|windows/|plugins/brooklyn/|plugins/brooklyn/|plugins/|windows/" kind="src" path="gui">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.trunk/lib/native/osx"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire/lib/native/osx"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="components/azureus/src/main/java"/>
