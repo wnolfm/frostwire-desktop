@@ -19,7 +19,13 @@ import com.limegroup.gnutella.gui.GUIMediator;
  */
 //2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class LimeLookAndFeel extends MetalLookAndFeel {
-	/**
+	
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7145164588441130590L;
+
+    /**
 	 * The constructor simply sets the color theme for the application.
 	 */
 	public LimeLookAndFeel() {

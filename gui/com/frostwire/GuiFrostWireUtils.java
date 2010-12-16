@@ -1,5 +1,6 @@
 package com.frostwire;
 
+import java.awt.Desktop;
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -9,11 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdesktop.jdic.desktop.Desktop;
 import org.limewire.collection.SortedList;
 import org.limewire.io.IOUtils;
 import org.limewire.util.FileUtils;
-import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -164,17 +163,13 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 					.isJavaMinorVersionEqualOrGreaterThan("1.6");
 
 			if (isJava16orGreater) {
-				java.awt.Desktop.getDesktop().open(file);
+				Desktop.getDesktop().open(file);
 			} else {
-				//try jdic if you're not a mac and you're on below 1.6
-				if (!OSUtils.isMacOSX()) {
-					Desktop.open(file);
-				} else {
-					//if you're an old mac, try the old way
-					GUIMediator.launchFile(file);
-				}
+				// try the old way
+			    GUIMediator.launchFile(file);
 			}
 		} catch (Exception e) {
+		    // try the old way
 			GUIMediator.launchFile(file);
 		}
 	}

@@ -520,7 +520,7 @@ public final class ThemeSettings extends LimeProps {
     		return false;
 		}
 		
-    	List<String> JAR_THEME_NAMES = scanJarFileForThemes(themesJarFile);
+    	//List<String> JAR_THEME_NAMES = scanJarFileForThemes(themesJarFile);
     	
     	File themeDir = THEME_DIR_FILE;
     	 try {

@@ -343,8 +343,8 @@ public final class ResourceManager {
         if (OSUtils.isWindows() || OSUtils.isLinux()) {
             boolean loaded = false;
             try {
-            	System.out.println("About to load tray, java.library.path = " + System.getProperty("java.library.path"));
-                System.loadLibrary("tray");
+            	//System.out.println("About to load tray, java.library.path = " + System.getProperty("java.library.path"));
+                //System.loadLibrary("tray");
                 loaded = true;
             } catch (UnsatisfiedLinkError ule) {
             	ule.printStackTrace();
@@ -658,8 +658,7 @@ public final class ResourceManager {
      */
     private boolean isPlasticAvailable() {
         try {
-            Class plastic = Class
-                    .forName("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
+            Class<?> plastic = Class.forName("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
             return plastic != null;
         } catch (ClassNotFoundException cnfe) {
             return false;
@@ -671,8 +670,7 @@ public final class ResourceManager {
      */
     private boolean isPlasticWindowsAvailable() {
         try {
-            Class plastic = Class
-                    .forName("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
+            Class<?> plastic = Class.forName("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
             return plastic != null;
         } catch (ClassNotFoundException cnfe) {
             return false;
@@ -687,7 +685,7 @@ public final class ResourceManager {
         String name = UIManager.getSystemLookAndFeelClassName();
         if (name != null) {
             try {
-                Class clazz = Class.forName(name);
+                Class<?> clazz = Class.forName(name);
                 LookAndFeel lf = (LookAndFeel) clazz.newInstance();
                 lf.initialize();
                 UIDefaults def = lf.getDefaults();
