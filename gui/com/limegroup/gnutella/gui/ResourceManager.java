@@ -352,7 +352,7 @@ public final class ResourceManager {
             LOADED_TRAY_LIBRARY = loaded;
             loaded = false;
             try {
-                System.loadLibrary("jdic");
+                //System.loadLibrary("jdic");
                 loaded = true;
             } catch (UnsatisfiedLinkError ule) {
             }
