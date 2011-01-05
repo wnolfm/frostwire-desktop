@@ -32,7 +32,6 @@ import com.limegroup.gnutella.gui.library.RecursiveSharingDialog.State;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.sharing.ShareManager;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -141,18 +140,18 @@ public final class LibraryMediator implements ThemeObserver {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(0, GUIConstants.SEPARATOR, GUIConstants.SEPARATOR, GUIConstants.SEPARATOR);
 		MAIN_PANEL.add(buttonPanel, gbc);
-		updateTheme();		
+		//updateTheme();		
 		
 		//  Set the initial selection in the LibraryTree
 		LIBRARY_TREE.setInitialSelection();
 	}
 
-	// inherit doc comment
-	public void updateTheme() {
-		LIBRARY_TREE.updateTheme();
-		Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-		TREE_SCROLL_PANE.getViewport().setBackground(tableColor);
-	}
+//	// inherit doc comment
+//	public void updateTheme() {
+//		LIBRARY_TREE.updateTheme();
+//		Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+//		TREE_SCROLL_PANE.getViewport().setBackground(tableColor);
+//	}
 
 	/**
 	 * Returns the <tt>JComponent</tt> that contains all of the elements of

@@ -110,21 +110,21 @@ final class CancelSearchIconProxy implements Icon {
 	    GUIMediator.safeInvokeAndWait(new Runnable() {
 	        public void run() {
 
-	            if(ThemeSettings.isWindowsTheme() && WindowsXPIcon.isAvailable()) {
-	                try {
-	                    PLAIN_ICON = new WindowsXPIcon(PLAIN);
-	                    SELECTED_ICON = new WindowsXPIcon(SELECTED);
-	                    ARMED_ICON = new WindowsXPIcon(ARMED);
-	                    return;
-	                } catch(IllegalArgumentException iae) {
-	                    // couldn't create image to resize
-	                } catch(NullPointerException npe) {
-	                    // internal windows plaf error
-	                } catch(ArithmeticException ae) {
-	                    // internal windows error (see https://www.limewire.org/jira/browse/GUI-8)
-	                }
-	                // if construction failed, fall through...
-	            }
+//	            if(ThemeSettings.isWindowsTheme() && WindowsXPIcon.isAvailable()) {
+//	                try {
+//	                    PLAIN_ICON = new WindowsXPIcon(PLAIN);
+//	                    SELECTED_ICON = new WindowsXPIcon(SELECTED);
+//	                    ARMED_ICON = new WindowsXPIcon(ARMED);
+//	                    return;
+//	                } catch(IllegalArgumentException iae) {
+//	                    // couldn't create image to resize
+//	                } catch(NullPointerException npe) {
+//	                    // internal windows plaf error
+//	                } catch(ArithmeticException ae) {
+//	                    // internal windows error (see https://www.limewire.org/jira/browse/GUI-8)
+//	                }
+//	                // if construction failed, fall through...
+//	            }
 
 	            PLAIN_ICON = GUIMediator.getThemeImage("kill");
 	            try {

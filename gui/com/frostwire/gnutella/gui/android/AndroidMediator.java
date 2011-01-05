@@ -103,11 +103,11 @@ public class AndroidMediator implements ThemeObserver {
 		MAIN_PANEL.add(EXPLORERS_CONTAINER,BorderLayout.CENTER);
 		SPLIT_PANE.setDividerLocation(300);
 	}
-
+/*
 	@Override
 	public void updateTheme() {
 	}
-	
+	*/
 	/**
 	 * Returns the <tt>JComponent</tt> that contains all of the elements of
 	 * the Chat.

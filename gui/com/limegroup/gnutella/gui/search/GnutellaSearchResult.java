@@ -19,7 +19,6 @@ import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.BitziLookupAction;
 import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.UISettings;
@@ -128,11 +127,11 @@ final class GnutellaSearchResult extends AbstractSearchResult {
     }
 
     public Color getEvenRowColor() {
-        return ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+        return Color.BLUE;//ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
     }
 
     public Color getOddRowColor() {
-        return ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
+        return Color.BLUE;//ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
     }
 
     public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {

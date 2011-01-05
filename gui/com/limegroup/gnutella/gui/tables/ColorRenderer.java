@@ -106,14 +106,14 @@ class ColorRenderer extends JComponent
         return renderer;
     }    
     
-    public void updateTheme() {
+    /*public void updateTheme() {
         for( Iterator<?> i = otherRenderers.values().iterator(); i.hasNext(); ) {
             Object o = i.next();
             if ( o instanceof ThemeObserver )  {
                 ((ThemeObserver)o).updateTheme();
             }
         }
-    }
+    }*/
    
     public void updateUI() {
         for( Iterator<?> i = otherRenderers.values().iterator(); i.hasNext(); ) {

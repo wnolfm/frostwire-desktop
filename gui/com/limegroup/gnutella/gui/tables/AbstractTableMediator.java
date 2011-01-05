@@ -41,9 +41,7 @@ import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIConstants;
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.licenses.License;
 
@@ -490,7 +488,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
 
     // inherit doc comment
     public void updateTheme() {
-        Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+        Color tableColor = Color.BLUE;// ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
         if (TABLE_PANE == null) return;
 
         TABLE_PANE.setBackground(tableColor);

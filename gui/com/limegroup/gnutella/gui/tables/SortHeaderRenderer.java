@@ -45,7 +45,7 @@ implements ThemeObserver {
     }
     
     private static void updateIcons() {
-        if(OSUtils.isMacOSX() || ThemeSettings.isWindowsTheme()) {
+        if(OSUtils.isMacOSX() /*|| ThemeSettings.isWindowsTheme()*/) {
             ASCENDING = AquaSortArrowIcon.getAscendingIcon();
             DESCENDING = AquaSortArrowIcon.getDescendingIcon();
         } else {

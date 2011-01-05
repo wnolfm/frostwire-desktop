@@ -12,7 +12,6 @@ import com.limegroup.gnutella.gui.tables.ColoredCell;
 import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 
 
 public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
@@ -170,7 +169,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
         else
             holder = new SizeHolder(0);
         
-        updateTheme();
+        //updateTheme();
     }
 
     /**
@@ -216,11 +215,11 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
         return playing ? _othercellColor : _cellColor;
     }
     
-	// inherit doc comment
-	public void updateTheme() {
-		_cellColor = ThemeFileHandler.WINDOW8_COLOR.getValue();
-		_othercellColor = ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
-	}    
+//	// inherit doc comment
+//	public void updateTheme() {
+//		_cellColor = ThemeFileHandler.WINDOW8_COLOR.getValue();
+//		_othercellColor = ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
+//	}    
 
 	/**
 	 * Return the table column for this index.

@@ -33,9 +33,6 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.gui.themes.LimeLookAndFeel;
-import com.limegroup.gnutella.gui.themes.LimePlasticTheme;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
@@ -192,16 +189,16 @@ public final class ResourceManager {
         if (icon != null)
             return icon;
 
-        File themeDir = ThemeSettings.THEME_DIR.getValue();
-
-        //System.out.println("ResourceManager.getThemeImage("+name+") Getting Theme Image from: \n" + org.limewire.util.CommonUtils.getUserSettingsDir() + "\n");
-        
-        // Next try to get from themes.
-        icon = getImageFromURL(new File(themeDir, name).getPath(), true);
-        if (icon != null && icon.getImage() != null) {
-            THEME_IMAGES.put(name, icon);
-            return icon;
-        }
+//        File themeDir = ThemeSettings.THEME_DIR.getValue();
+//
+//        //System.out.println("ResourceManager.getThemeImage("+name+") Getting Theme Image from: \n" + org.limewire.util.CommonUtils.getUserSettingsDir() + "\n");
+//        
+//        // Next try to get from themes.
+//        icon = getImageFromURL(new File(themeDir, name).getPath(), true);
+//        if (icon != null && icon.getImage() != null) {
+//            THEME_IMAGES.put(name, icon);
+//            return icon;
+//        }
 
         // Then try to get from org/limewire/gui/images resources
         icon = getImageFromURL(IMAGES_PATH + name, false);
@@ -323,17 +320,17 @@ public final class ResourceManager {
      * constructed from outside this class.
      */
     private ResourceManager() {
-        if (!ThemeFileHandler.isCurrent() || !ThemeSettings.isValid()) {
-            ThemeSettings.THEME_FILE.revertToDefault();
-            ThemeSettings.THEME_DIR.revertToDefault();
-            ThemeFileHandler.reload(false);
-        }
+//        if (!ThemeFileHandler.isCurrent() || !ThemeSettings.isValid()) {
+//            ThemeSettings.THEME_FILE.revertToDefault();
+//            ThemeSettings.THEME_DIR.revertToDefault();
+//            ThemeFileHandler.reload(false);
+//        }
 
         String bMetal = System.getProperty("apple.awt.brushMetalLook");
         BRUSHED_METAL = bMetal != null && bMetal.equalsIgnoreCase("true");
 
-        themeChanged();
-        ResourceManager.setFontSizes(ThemeSettings.FONT_SIZE_INCREMENT.getValue());
+        //themeChanged();
+        //ResourceManager.setFontSizes(ThemeSettings.FONT_SIZE_INCREMENT.getValue());
         try {
             validateLocaleAndFonts(Locale.getDefault());
         } catch (NullPointerException npe) {
@@ -544,17 +541,17 @@ public final class ResourceManager {
                             "newFolderIconVistaFix");
                 }
             } else {
-                if (isPlasticAvailable()) {
-                    if (_defaultTheme == null)
-                        _defaultTheme = getDefaultTheme();
-
-                    LimePlasticTheme.installThisTheme();
-                    UIManager
-                            .setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
-                    LimeLookAndFeel.installUIManagerDefaults();
-                } else {
-                    UIManager.setLookAndFeel(new LimeLookAndFeel());
-                }
+//                if (isPlasticAvailable()) {
+//                    if (_defaultTheme == null)
+//                        _defaultTheme = getDefaultTheme();
+//
+//                    LimePlasticTheme.installThisTheme();
+//                    UIManager
+//                            .setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
+//                    LimeLookAndFeel.installUIManagerDefaults();
+//                } else {
+//                    UIManager.setLookAndFeel(new LimeLookAndFeel());
+//                }
             }
 
             UIManager

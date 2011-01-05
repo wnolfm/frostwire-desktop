@@ -23,7 +23,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.QuestionsHandler;
@@ -154,7 +153,7 @@ public class MonitorView extends JPanel implements ThemeObserver {
 	 * Updates the appearance of this panel based on the current theme.
 	 */
 	public void updateTheme() {
-		Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+		Color tableColor = Color.BLUE;//ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
 		scrollPane.getViewport().setBackground(tableColor);
 		listOfQueries.setBackground(tableColor);
 	}

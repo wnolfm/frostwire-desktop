@@ -119,13 +119,13 @@ public class ThemeMediator {
     	   !className.equals(oldClassName)) {
     	    File oldTheme = ThemeSettings.THEME_FILE.getValue();
     	    ThemeSettings.THEME_FILE.setValue(newTheme);
-    	    ThemeFileHandler.reload(forceReload);
+    	    //ThemeFileHandler.reload(forceReload);
             ThemeSettings.setOtherLF(className);
-    	    if(!ThemeFileHandler.isCurrent()) {
-        		ThemeSettings.THEME_FILE.setValue(oldTheme);
-        		ThemeFileHandler.reload(forceReload);
-        		showThemeError(newTheme.getName());
-    	    } else {
+//    	    if(!ThemeFileHandler.isCurrent()) {
+//        		ThemeSettings.THEME_FILE.setValue(oldTheme);
+//        		ThemeFileHandler.reload(forceReload);
+//        		showThemeError(newTheme.getName());
+//    	    } else {
         		boolean isPinstripes = ThemeSettings.isPinstripesTheme();
         		boolean wasMetal = ResourceManager.instance().isBrushedMetalSet();
         		boolean isMetal = ThemeSettings.isBrushedMetalTheme();
@@ -154,7 +154,7 @@ public class ThemeMediator {
         		    _themeavailable = true;
         		}
     	    }
-    	}
+    	//}
         _themeavailable = true; // FTA: if themes is already loaded do nothing but don't disable the option.
     }
     
@@ -195,9 +195,9 @@ public class ThemeMediator {
      * Updates all theme observers.
      */
     public static void updateThemeObservers() {
-        for(ThemeObserver curObserver : THEME_OBSERVERS) {
-    	    curObserver.updateTheme();
-        }
+//        for(ThemeObserver curObserver : THEME_OBSERVERS) {
+//    	    curObserver.updateTheme();
+//        }
 
         GUIMediator.getMainOptionsComponent().validate();
         GUIMediator.getAppFrame().validate();

@@ -68,19 +68,19 @@ final class ThemeMenu extends AbstractMenu {
         
         
         JMenuItem def = addMenuItem(THEME_CHANGER);            
-        final Object defaultVal = ThemeSettings.THEME_DEFAULT.getAbsolutePath();
-        def.putClientProperty(THEME_PROPERTY, defaultVal);
-        
-        // Add a listener to set the new theme as selected.
-        def.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                setSelection(defaultVal);
-            }
-        });
+//        final Object defaultVal = ThemeSettings.THEME_DEFAULT.getAbsolutePath();
+//        def.putClientProperty(THEME_PROPERTY, defaultVal);
+//        
+//        // Add a listener to set the new theme as selected.
+//        def.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent ae) {
+//                setSelection(defaultVal);
+//            }
+//        });
         
         addSeparator();
         
-        addThemeItems();
+        //addThemeItems();
     }
     
     /**
@@ -188,8 +188,8 @@ final class ThemeMenu extends AbstractMenu {
         }
     
     	public void actionPerformed(ActionEvent e) {
-            removeThemeItems();
-            addThemeItems();
+            //removeThemeItems();
+            //addThemeItems();
     	}
     }    
     

@@ -6,7 +6,6 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
@@ -52,8 +51,8 @@ class EndpointRenderer extends DefaultTableCellRenderer
     }
 
     public void updateTheme() {
-        _nonPrivateColor = ThemeFileHandler.WINDOW8_COLOR.getValue();
-        _privateColor = ThemeFileHandler.SEARCH_PRIVATE_IP_COLOR.getValue();
-        _selectedPrivateColor = ThemeFileHandler.SEARCH_SELECTED_PRIVATE_IP_COLOR.getValue();
+        _nonPrivateColor = Color.BLUE;// ThemeFileHandler.WINDOW8_COLOR.getValue();
+        _privateColor = Color.BLUE;//ThemeFileHandler.SEARCH_PRIVATE_IP_COLOR.getValue();
+        _selectedPrivateColor = Color.BLUE;//ThemeFileHandler.SEARCH_SELECTED_PRIVATE_IP_COLOR.getValue();
     }
 }

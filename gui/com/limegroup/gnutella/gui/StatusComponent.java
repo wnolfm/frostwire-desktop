@@ -14,7 +14,6 @@ import javax.swing.JProgressBar;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 
 /**
  * Displays a status update in various ways, depending on the
@@ -53,8 +52,8 @@ public class StatusComponent extends JPanel {
         GUIUtils.setOpaque(false, this);
         if(BAR != null && !OSUtils.isMacOSX())
             BAR.setOpaque(true);
-        if(LABEL != null)
-            LABEL.setForeground(ThemeFileHandler.WINDOW4_COLOR.getValue());
+        //if(LABEL != null)
+        //    LABEL.setForeground(ThemeFileHandler.WINDOW4_COLOR.getValue());
         BAR.setIndeterminate(true);
     }
     
@@ -74,8 +73,8 @@ public class StatusComponent extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         construct();
         GUIUtils.setOpaque(false, this);
-        if(LABEL != null)
-            LABEL.setForeground(ThemeFileHandler.WINDOW4_COLOR.getValue());
+        //if(LABEL != null)
+        //    LABEL.setForeground(ThemeFileHandler.WINDOW4_COLOR.getValue());
         
         BAR.setMaximum(steps+1);
         BAR.setMinimum(0);

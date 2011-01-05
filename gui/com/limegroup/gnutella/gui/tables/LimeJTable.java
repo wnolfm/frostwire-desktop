@@ -32,8 +32,6 @@ import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.JMultilineToolTip;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.util.DataUtils;
 
 /**
@@ -510,7 +508,7 @@ public class LimeJTable extends JTable implements JSortTable {
         if(row % 2 == 0 || !tableSettings.ROWSTRIPE.getValue())
             return getBackground();
         else
-            return ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
+            return Color.BLUE;//ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
     }
         
     
@@ -642,7 +640,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * @return the default Color for an even row
      */
     protected Color getEvenRowColor(int row) {
-        return ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+        return Color.BLUE;//ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
     }
 
     /**
@@ -652,7 +650,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * @return the default Color for an even row
      */
     protected Color getOddRowColor(int row) {
-        return ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
+        return Color.BLUE;//ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
     }     
     
     /**
@@ -681,7 +679,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * Updates the row height appropriately
      */
     private void updateRowHeight() {
-        int increment = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
+        int increment = 0;//ThemeSettings.FONT_SIZE_INCREMENT.getValue();
         if (increment != 0) {
             FontMetrics fm = getFontMetrics(getFont());
             setRowHeight(Math.max(fm.getHeight() + 1, DEFAULT_ROW_HEIGHT));

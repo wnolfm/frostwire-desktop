@@ -1,13 +1,13 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,8 +21,6 @@ import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 class FilterInputPanel extends BoxPanel {
 
@@ -31,8 +29,8 @@ class FilterInputPanel extends BoxPanel {
      */
     private final Ditherer DITHERER = 
             new Ditherer(20,
-                        ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(), 
-                        ThemeFileHandler.SEARCH_PANEL_BG_2.getValue()
+                        Color.GRAY,//ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(), 
+                        Color.BLACK//ThemeFileHandler.SEARCH_PANEL_BG_2.getValue()
                         );
         
     /**
@@ -148,12 +146,12 @@ class FilterInputPanel extends BoxPanel {
         panel.add(Box.createVerticalStrut(5));
         panel.add(GUIUtils.center(search));
         panel.add(Box.createVerticalStrut(5));
-        panel.setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+        //panel.setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
         GUIUtils.setOpaque(false, panel);
-        if(!ThemeSettings.isNativeTheme())
-            panel.setOpaque(true);
-        panel.setBorder(BorderFactory.createLineBorder(
-            ThemeFileHandler.SEARCH_GRID_COLOR.getValue()));
+        //if(!ThemeSettings.isNativeTheme())
+        //    panel.setOpaque(true);
+        //panel.setBorder(BorderFactory.createLineBorder(
+        //    ThemeFileHandler.SEARCH_GRID_COLOR.getValue()));
         
         backToSearch = search;
         return panel;

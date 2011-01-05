@@ -26,7 +26,7 @@ abstract class AbstractMenu implements Menu {
 	/**
 	 * The font menus should use.
 	 */
-	static final Font FONT = new FontUIResource(new Font("Dialog", Font.PLAIN, 11 + ThemeSettings.FONT_SIZE_INCREMENT.getValue()));
+	static final Font FONT = new FontUIResource(new Font("Dialog", Font.PLAIN, 11));
 
 	/**
 	 * Constant handle to the <tt>JMenu</tt> instance for this 

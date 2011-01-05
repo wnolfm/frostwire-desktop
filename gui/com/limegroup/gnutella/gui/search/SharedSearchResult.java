@@ -14,7 +14,6 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
@@ -108,11 +107,11 @@ public class SharedSearchResult extends AbstractSearchResult {
     }
 
     public Color getEvenRowColor() {
-        return ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+        return Color.BLUE;//ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
     }
 
     public Color getOddRowColor() {
-        return ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
+        return Color.BLUE;//ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
     }
 
     public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {

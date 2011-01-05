@@ -2,11 +2,10 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -35,7 +34,6 @@ import javax.swing.JTextArea;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 import javax.swing.text.BadLocationException;
 
 import org.limewire.io.NetworkInstanceUtils;
@@ -51,8 +49,6 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
 import com.limegroup.gnutella.gui.MySharedFilesButton;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.xml.InputPanel;
 import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -129,8 +125,8 @@ class SearchInputPanel extends JPanel {
      */
     private final Ditherer DITHERER =
             new Ditherer(62,
-                        ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(), 
-                        ThemeFileHandler.SEARCH_PANEL_BG_2.getValue()
+                        Color.GRAY,//ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(), 
+                        Color.BLACK//ThemeFileHandler.SEARCH_PANEL_BG_2.getValue()
                         );
                     
 	private JPanel searchEntry;
@@ -189,20 +185,20 @@ class SearchInputPanel extends JPanel {
             public void mouseReleased(MouseEvent e) {}
         });         
 
-        if(!ThemeSettings.isNativeTheme()) {
-            PANE.setBorder(
-              new LineBorder(ThemeFileHandler.SEARCH_GRID_COLOR.getValue()) {
-                public void paintBorder(Component c, Graphics g,
-                                        int x, int y, int width, int height) {
-                    try {
-                        Component sel = PANE.getSelectedComponent();
-                        if(sel != null)
-                            height = sel.getBounds().height + 4;                    
-                    } catch(ArrayIndexOutOfBoundsException aioobe) {}
-                    super.paintBorder(c, g, x, y, width, height);
-                }
-            });
-        }
+//        if(!ThemeSettings.isNativeTheme()) {
+//            PANE.setBorder(
+//              new LineBorder(ThemeFileHandler.SEARCH_GRID_COLOR.getValue()) {
+//                public void paintBorder(Component c, Graphics g,
+//                                        int x, int y, int width, int height) {
+//                    try {
+//                        Component sel = PANE.getSelectedComponent();
+//                        if(sel != null)
+//                            height = sel.getBounds().height + 4;                    
+//                    } catch(ArrayIndexOutOfBoundsException aioobe) {}
+//                    super.paintBorder(c, g, x, y, width, height);
+//                }
+//            });
+//        }
         add(PANE, BorderLayout.CENTER);
 
         JPanel viewSharedFilesPanel = new BoxPanel(BoxPanel.X_AXIS);
@@ -213,10 +209,10 @@ class SearchInputPanel extends JPanel {
         add(viewSharedFilesPanel, BorderLayout.SOUTH);
         
         WHATSNEW_SEARCH_LABEL.setFont(UIManager.getFont("Table.font.bold"));
-        Font bold = UIManager.getFont("Table.font.bold");
-        Font bolder =
-            new Font(bold.getName(), bold.getStyle(), bold.getSize() + 5);
-        SEARCH_TYPE_LABEL.setFont(bolder);
+        //Font bold = UIManager.getFont("Table.font.bold");
+        //Font bolder =
+         //   new Font(bold.getName(), bold.getStyle(), bold.getSize() + 5);
+        //SEARCH_TYPE_LABEL.setFont(bolder);
         SEARCH_TYPE_LABEL.setPreferredSize(new Dimension(130, 20)); //FTA: Finally. Spanish translation for "Cualquier tipo" now shows properly.
         schemaListener.actionPerformed(null);
     }
@@ -310,9 +306,9 @@ class SearchInputPanel extends JPanel {
      */
     private void panelize(JComponent c) {
         GUIUtils.setOpaque(false, c);
-        if(!ThemeSettings.isNativeTheme())
-            c.setOpaque(true);
-        c.setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+        //if(!ThemeSettings.isNativeTheme())
+        //    c.setOpaque(true);
+        //c.setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
         c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
     }
     

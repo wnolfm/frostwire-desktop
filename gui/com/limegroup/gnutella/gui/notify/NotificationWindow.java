@@ -41,8 +41,6 @@ import org.limewire.util.SystemUtils;
 
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.search.Ditherer;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 
 /**
  * An animated notification window that can display multiple notifications. The
@@ -693,9 +691,9 @@ public class NotificationWindow extends AnimatedWindow {
     public class MainPanel extends JPanel {
         
         // used to paint background
-        private Ditherer DITHERER = new Ditherer(62,
-                ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(),
-                ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+//        private Ditherer DITHERER = new Ditherer(62,
+//                ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(),
+//                ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
 
         public MainPanel(LayoutManager layoutManager) {
             super(layoutManager);
@@ -703,21 +701,21 @@ public class NotificationWindow extends AnimatedWindow {
         
         @Override
         protected void paintComponent(Graphics g) {
-            if (!DITHERER.getFromColor().equals(DITHERER.getToColor())) {
-                Dimension size = getSize();
-                DITHERER.draw(g, size.height, size.width);
-            } else {
+//            if (!DITHERER.getFromColor().equals(DITHERER.getToColor())) {
+//                Dimension size = getSize();
+//                DITHERER.draw(g, size.height, size.width);
+//            } else {
                 super.paintComponent(g);
-            }
+            //}
         }
 
         @Override
         public void updateUI() {
             super.updateUI();
-            DITHERER = new Ditherer(62,
-                    ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(),
-                    ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
-            setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+//            DITHERER = new Ditherer(62,
+//                    ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(),
+//                    ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+//            setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
         }
 
     }

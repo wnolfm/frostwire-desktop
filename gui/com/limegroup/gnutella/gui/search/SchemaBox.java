@@ -29,7 +29,6 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ImageManipulator;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.xml.LimeXMLSchema;
 
 /**
@@ -88,8 +87,8 @@ final class SchemaBox extends JPanel {
      */
     private final Ditherer DITHERER =
             new Ditherer(20,
-                        ThemeFileHandler.FILTER_TITLE_TOP_COLOR.getValue(), 
-                        ThemeFileHandler.FILTER_TITLE_COLOR.getValue()
+                        Color.GRAY,//ThemeFileHandler.FILTER_TITLE_TOP_COLOR.getValue(), 
+                        Color.BLACK//ThemeFileHandler.FILTER_TITLE_COLOR.getValue()
                         );
 
     /**
@@ -100,7 +99,7 @@ final class SchemaBox extends JPanel {
         int cols, rows;
         cols = 2;
         rows = (int)Math.ceil(allSchemas.size() / 2.0);
-        SCHEMAS.setBackground(ThemeFileHandler.SEARCH_GRID_COLOR.getValue());
+        //SCHEMAS.setBackground(ThemeFileHandler.SEARCH_GRID_COLOR.getValue());
         SCHEMAS.setLayout(new GridLayout(rows, cols, 1, 1));
         SCHEMAS.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         addSchemas(allSchemas);
@@ -295,7 +294,7 @@ final class SchemaBox extends JPanel {
             if(e.getStateChange() == ItemEvent.SELECTED) {
                 button.setIcon((Icon)button.getClientProperty(SELECTED));
                 parent.setDithering(true);
-                parent.setBackground(ThemeFileHandler.FILTER_TITLE_COLOR.getValue());
+                //parent.setBackground(ThemeFileHandler.FILTER_TITLE_COLOR.getValue());
             } else {
                 button.setIcon((Icon)button.getClientProperty(DESELECTED));
                 parent.setDithering(false);

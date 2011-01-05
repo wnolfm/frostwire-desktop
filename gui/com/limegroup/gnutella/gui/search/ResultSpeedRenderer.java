@@ -6,7 +6,6 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
@@ -29,8 +28,8 @@ class ResultSpeedRenderer extends DefaultTableCellRenderer
 
 	// inherit doc comment
 	public void updateTheme() {
-		_measuredColor = ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
-		_unmeasuredColor = ThemeFileHandler.WINDOW8_COLOR.getValue();			
+		_measuredColor = Color.BLUE;//ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
+		_unmeasuredColor = Color.BLUE;//ThemeFileHandler.WINDOW8_COLOR.getValue();			
 	}
 
     public Component getTableCellRendererComponent(JTable table,

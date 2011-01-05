@@ -23,7 +23,6 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.limegroup.gnutella.gui.tables.LimeJTable;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
 /**
@@ -234,13 +233,13 @@ public abstract class CompositeCellTableRendererAndTableCellEditor extends JPane
     }
 
     
-    /**
-     * When the theme changes, the JLabel will not be defaultly updated since
-     * it is wrapped in a jpanel. Must explicitely update the label
-     */
-    public void updateTheme() {
-        mainLabel.setFont(UIManager.getFont("Table.font"));
-        mainLabel.setForeground(ThemeFileHandler.WINDOW8_COLOR.getValue());
-    } 
+//    /**
+//     * When the theme changes, the JLabel will not be defaultly updated since
+//     * it is wrapped in a jpanel. Must explicitely update the label
+//     */
+//    public void updateTheme() {
+//        mainLabel.setFont(UIManager.getFont("Table.font"));
+//        mainLabel.setForeground(ThemeFileHandler.WINDOW8_COLOR.getValue());
+//    } 
 }
 

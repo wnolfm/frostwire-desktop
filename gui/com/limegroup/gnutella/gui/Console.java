@@ -62,7 +62,6 @@ import org.limewire.util.CommonUtils;
 import com.google.inject.Inject;
 import com.limegroup.gnutella.bugs.LocalClientInfo;
 import com.limegroup.gnutella.dht.DHTManager;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ConsoleSettings;
@@ -391,7 +390,7 @@ public class Console extends JPanel implements ThemeObserver {
         
         add(BorderLayout.SOUTH, controlsPanel);
 
-        updateTheme();
+        //updateTheme();
         ThemeMediator.addThemeObserver(this);
 
         refreshLoggers();
@@ -716,13 +715,13 @@ public class Console extends JPanel implements ThemeObserver {
         }
     }
     
-    /**
-     * Updates the appearance of this panel based on the current theme.
-     */
-    public void updateTheme() {
-        Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-        scrollPane.getViewport().setBackground(tableColor);
-    }
+//    /**
+//     * Updates the appearance of this panel based on the current theme.
+//     */
+//    public void updateTheme() {
+//        Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+//        scrollPane.getViewport().setBackground(tableColor);
+//    }
 
     /**
      * Returns Level.OFF instead of null if logging is turned off

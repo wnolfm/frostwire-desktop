@@ -486,8 +486,8 @@ public final class ThemeSettings extends LimeProps {
         THEME_DEFAULT_DIR = dir;
         */
         
-        THEME_DEFAULT = GTK_LAF_THEME_FILE;
-        THEME_DEFAULT_DIR = new File(THEME_DIR_FILE, "GTK_theme");
+        THEME_DEFAULT = null;
+        THEME_DEFAULT_DIR = null;
     }
 	
 	/**

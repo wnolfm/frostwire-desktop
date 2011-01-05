@@ -12,13 +12,12 @@ import javax.swing.Icon;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.bittorrent.BTDataImpl;
 import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
-import com.limegroup.gnutella.InsufficientDataException;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
+import com.limegroup.gnutella.InsufficientDataException;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -44,7 +43,6 @@ import com.limegroup.gnutella.gui.tables.ProgressBarHolder;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.tables.SpeedRenderer;
 import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 /**
@@ -1038,8 +1036,8 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	}
 	
 	private void initColors() {
-	    _cellColor = ThemeFileHandler.WINDOW8_COLOR.getValue();
-        _othercellColor = ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
+	    _cellColor = Color.BLUE;//ThemeFileHandler.WINDOW8_COLOR.getValue();
+        _othercellColor = Color.BLUE;//ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
 	}
 	
 	private Color getColor(boolean playing) {

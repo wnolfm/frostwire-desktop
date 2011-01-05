@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -42,7 +43,6 @@ import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.tables.CircularIcon;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.SortArrowIcon;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.xml.XMLValue;
 
 /**
@@ -107,8 +107,8 @@ class FilterBox extends JPanel {
      */
     private final Ditherer DITHERER =
             new Ditherer(10,
-                        ThemeFileHandler.FILTER_TITLE_TOP_COLOR.getValue(), 
-                        ThemeFileHandler.FILTER_TITLE_COLOR.getValue()
+                    Color.BLUE,//ThemeFileHandler.FILTER_TITLE_TOP_COLOR.getValue(), 
+            Color.BLUE//ThemeFileHandler.FILTER_TITLE_COLOR.getValue()
                         );    
     
     
@@ -224,7 +224,7 @@ class FilterBox extends JPanel {
         add(TITLE_PANEL, BorderLayout.NORTH);
         add(LIST_PANEL, BorderLayout.CENTER);
 
-        LIST.setBackground(ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue());
+        //LIST.setBackground(ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue());
         LIST.setCellRenderer(RENDERER);
         LIST.addListSelectionListener(MOVER);
         LIST.setModel(DELEGATOR);
@@ -507,7 +507,7 @@ class FilterBox extends JPanel {
         });
         
         JPanel panel = new DitherPanel(DITHERER);
-        panel.setBackground(ThemeFileHandler.FILTER_TITLE_COLOR.getValue());        
+        //panel.setBackground(ThemeFileHandler.FILTER_TITLE_COLOR.getValue());        
         panel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.WEST;
@@ -861,7 +861,7 @@ class FilterBox extends JPanel {
                 }
                 if(idx % 2 == 0 && STRIPE_ROWS.getValue()) {
                     setOpaque(true);
-                    setBackground(ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue());
+                    //setBackground(ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue());
                 } else {
                     setOpaque(false);
                 }

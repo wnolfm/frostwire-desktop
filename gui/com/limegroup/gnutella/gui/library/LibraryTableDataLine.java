@@ -25,7 +25,6 @@ import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.tables.UploadCountHolder;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -217,7 +216,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	public LibraryTableDataLine(LibraryTableModel ltm) {
 		super();
 		_model = ltm;
-		updateTheme();
+		//updateTheme();
 		ThemeMediator.addThemeObserver(this);
 	}
 	
@@ -229,11 +228,11 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	    ThemeMediator.removeThemeObserver(this);
 	}
 
-	// inherit doc comment
-	public void updateTheme() {
-		_sharedCellColor = ThemeFileHandler.WINDOW8_COLOR.getValue();
-		_unsharedCellColor = ThemeFileHandler.NOT_SHARING_LABEL_COLOR.getValue();
-	}
+//	// inherit doc comment
+//	public void updateTheme() {
+//		_sharedCellColor = ThemeFileHandler.WINDOW8_COLOR.getValue();
+//		_unsharedCellColor = ThemeFileHandler.NOT_SHARING_LABEL_COLOR.getValue();
+//	}
 
 	public FileDesc getFileDesc() { return _fileDesc; }
 

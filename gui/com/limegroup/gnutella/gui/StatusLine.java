@@ -36,9 +36,7 @@ import org.limewire.setting.BooleanSetting;
 import com.frostwire.actions.ConnectionDoctorAction;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.NetworkManager;
-import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -966,7 +964,7 @@ public final class StatusLine implements ThemeObserver {
                 if (!_string.endsWith("..."))
                     _string += "...";
             } else if (_string.startsWith("0")) {
-                g2.setPaint(ThemeFileHandler.NOT_SHARING_LABEL_COLOR.getValue());
+                g2.setPaint(Color.RED);//ThemeFileHandler.NOT_SHARING_LABEL_COLOR.getValue());
                 if (_string.endsWith("..."))
                     _string = _string.substring(0, _string.length() - 3);
             }

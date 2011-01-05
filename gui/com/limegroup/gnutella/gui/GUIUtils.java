@@ -293,7 +293,7 @@ public final class GUIUtils {
         for(int i = 0; i < cs.length; i++) {
             if(cs[i] instanceof JComponent &&
                !(cs[i] instanceof JTextField) &&
-               (ThemeSettings.isNativeOSXTheme() ||
+               (
                 !(cs[i] instanceof JButton))
               ) {  
                 ((JComponent)cs[i]).setOpaque(op);
