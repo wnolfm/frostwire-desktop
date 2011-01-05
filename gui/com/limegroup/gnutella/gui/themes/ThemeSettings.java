@@ -149,12 +149,15 @@ public final class ThemeSettings extends LimeProps {
      * they're older than the ones in our jar.
      */
     static {
+    	/**
         File themesJar = getThemesJar();    
         //System.out.println("ThemeSettings - Themes jar: " + themesJar);
         if(themesJar == null || !themesJar.isFile())
             JAR_THEME_NAMES = Collections.emptyList();
         else
-            JAR_THEME_NAMES = scanJarFileForThemes(themesJar);        
+            JAR_THEME_NAMES = scanJarFileForThemes(themesJar);
+        */
+    	JAR_THEME_NAMES = Collections.emptyList();
     }
     
     /**
@@ -461,6 +464,7 @@ public final class ThemeSettings extends LimeProps {
     public static final File THEME_DEFAULT;
     public static final File THEME_DEFAULT_DIR;
     static {
+    	/*
         File theme, dir;
         if(OSUtils.isMacOSX()) {
             theme = PINSTRIPES_OSX_THEME_FILE;
@@ -480,6 +484,10 @@ public final class ThemeSettings extends LimeProps {
         }
         THEME_DEFAULT = theme;
         THEME_DEFAULT_DIR = dir;
+        */
+        
+        THEME_DEFAULT = GTK_LAF_THEME_FILE;
+        THEME_DEFAULT_DIR = new File(THEME_DIR_FILE, "GTK_theme");
     }
 	
 	/**
