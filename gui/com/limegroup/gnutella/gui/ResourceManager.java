@@ -200,6 +200,8 @@ public final class ResourceManager {
 //            return icon;
 //        }
 
+        
+        
         // Then try to get from org/limewire/gui/images resources
         icon = getImageFromURL(IMAGES_PATH + name, false);
         if (icon != null && icon.getImage() != null) {

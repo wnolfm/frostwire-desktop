@@ -220,14 +220,14 @@ public abstract class CompositeCellTableRendererAndTableCellEditor extends JPane
         buttonPanel.setVisible(buttonsVisible());
                 
         // update the background and foreground colors
-        if (isSel ) {
-            setBackground(UIManager.getColor("Table.selectionBackground"));
-            setForeground(UIManager.getColor("Table.selectionForeground"));
-        } else {
-            LimeJTable ljt = (LimeJTable)table;
-            setBackground(ljt.getBackgroundForRow(row));
-            setForeground(ljt.getForeground());
-        }
+        //if (isSel ) {
+            //setBackground(UIManager.getColor("Table.selectionBackground"));
+            //setForeground(UIManager.getColor("Table.selectionForeground"));
+        //} else {
+        //    LimeJTable ljt = (LimeJTable)table;
+            //setBackground(ljt.getBackgroundForRow(row));
+            //setForeground(ljt.getForeground());
+        //}
 
         return this;        
     }

@@ -174,7 +174,8 @@ final class LibraryTree extends JTree implements MouseObserver {
             addNode(sharedFilesNode, torrentsMetaFilesNode);
         } 
 		
-		updateTheme();
+		//updateTheme();
+        setCellRenderer(new LibraryTreeCellRenderer());
 		
 		// TODO dnd install LimeDropTarget
 		setDragEnabled(true);
@@ -260,11 +261,11 @@ final class LibraryTree extends JTree implements MouseObserver {
 	}
 	
 	// inherit doc comment
-	public void updateTheme() {
-		Color tableColor = Color.BLUE;//ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-		setBackground(tableColor);
-		setCellRenderer(new LibraryTreeCellRenderer());
-	}
+//	public void updateTheme() {
+//		Color tableColor = Color.BLUE;//ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+//		setBackground(tableColor);
+//		setCellRenderer(new LibraryTreeCellRenderer());
+//	}
 	
 	/**
 	 * Sets the initial selection to the Saved Files folder.

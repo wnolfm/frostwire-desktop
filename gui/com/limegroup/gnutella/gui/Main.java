@@ -3,10 +3,28 @@ package com.limegroup.gnutella.gui;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
+import org.limewire.util.OSUtils;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.skin.GraphiteGlassSkin;
+import org.pushingpixels.substance.api.skin.SubstanceGraphiteGlassLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceMistAquaLookAndFeel;
+import org.python.modules.newmodule;
+
+import com.frostwire.gnutella.gui.FadeSlideTransition;
 
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
@@ -50,13 +68,53 @@ public class Main {
 			// show initial splash screen only if there are no arguments
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
+            
+            final Frame finalSplash = splash;
+            final String[] finalArgs = args;
 
-            // load the GUI through reflection so that we don't reference classes here,
-            // which would slow the speed of class-loading, causing the splash to be
-            // displayed later.
-            Class.forName("com.limegroup.gnutella.gui.GUILoader").
-                getMethod("load", new Class[] { String[].class, Frame.class }).
-                    invoke(null, new Object[] { args, splash });
+            JFrame.setDefaultLookAndFeelDecorated(true);
+	        SwingUtilities.invokeLater(new Runnable() {
+	          public void run() {
+	            try {
+	              //UIManager.setLookAndFeel(new SubstanceMistAquaLookAndFeel());
+	              Map<String,Object> lafObjects = null;
+	              
+	              if (OSUtils.isMacOSX()) {
+		              UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		              
+		              String[] keys = new String[] { "MenuBarUI", "MenuUI", "MenuItemUI", "CheckBoxMenuItemUI", "RadioButtonMenuItemUI", "PopupMenuUI" };
+		              lafObjects = new HashMap<String, Object>();
+		              
+		              for (String key : keys) {
+		            	  lafObjects.put(key,UIManager.get(key));
+		              }
+	              }
+	              
+	              SubstanceLookAndFeel.setSkin(new GraphiteGlassSkin());
+	              
+	              if (OSUtils.isMacOSX()) {
+	            	  Set<String> keySet = lafObjects.keySet();
+	            	  for (String key : keySet) {
+	            		  UIManager.put(key, lafObjects.get(key));
+	            	  }
+	              }
+	            } catch (Exception e) {
+	              System.out.println("Substance Graphite failed to initialize");
+	            }
+	            // load the GUI through reflection so that we don't reference classes here,
+	            // which would slow the speed of class-loading, causing the splash to be
+	            // displayed later.
+	            try {
+					Class.forName("com.limegroup.gnutella.gui.GUILoader").
+					    getMethod("load", new Class[] { String[].class, Frame.class }).
+					        invoke(null, new Object[] { finalArgs, finalSplash });
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+	          }
+	        });
+            
         } catch(Throwable e) {
             e.printStackTrace();
             System.exit(1);

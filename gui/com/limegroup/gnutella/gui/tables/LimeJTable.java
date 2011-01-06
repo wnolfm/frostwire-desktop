@@ -505,10 +505,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * Returns the color that a specific row will be.
      */
     public Color getBackgroundForRow(int row) {
-        if(row % 2 == 0 || !tableSettings.ROWSTRIPE.getValue())
-            return getBackground();
-        else
-            return Color.BLUE;//ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
+        return getBackground();
     }
         
     
@@ -533,25 +530,25 @@ public class LimeJTable extends JTable implements JSortTable {
     	                                              isSelected, hasFocus,
     	                                              row, column);
 	                      
-        Color  odd = getEvenRowColor(row);
-        Color even = getOddRowColor(row);
-        
-        if ( isSelected ) {
-            // do nothing if selected.
-        } else if (hasFocus && isCellEditable(row, column)) {
-            // do nothing if we're focused & editting.
-        } else if (even.equals(odd)) {
-            // do nothing if backgrounds are the same.
-        } else if (!tableSettings.ROWSTRIPE.getValue()) {
-            // if the renderer's background isn't already the normal one,
-            // change it.  (needed for real-time changing of the option)
-            if( r != null && !r.equals(even) )
-                r.setBackground(even);
-        } else if ( row % 2 != 0 ) {
-            r.setBackground(odd);
-        } else {
-            r.setBackground(even);
-        }
+//        Color  odd = getEvenRowColor(row);
+//        Color even = getOddRowColor(row);
+//        
+//        if ( isSelected ) {
+//            // do nothing if selected.
+//        } else if (hasFocus && isCellEditable(row, column)) {
+//            // do nothing if we're focused & editting.
+//        } else if (even.equals(odd)) {
+//            // do nothing if backgrounds are the same.
+//        } else if (!tableSettings.ROWSTRIPE.getValue()) {
+//            // if the renderer's background isn't already the normal one,
+//            // change it.  (needed for real-time changing of the option)
+//            if( r != null && !r.equals(even) )
+//                r.setBackground(even);
+//        } else if ( row % 2 != 0 ) {
+//            r.setBackground(Color.WHITE);
+//        } else {
+//            r.setBackground(new Color(0xcecece));
+//        }
         
         return r;
     }
@@ -650,7 +647,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * @return the default Color for an even row
      */
     protected Color getOddRowColor(int row) {
-        return Color.BLUE;//ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
+        return getBackground();
     }     
     
     /**

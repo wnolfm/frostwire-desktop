@@ -223,8 +223,8 @@ public final class Initializer {
             SystemUtils.setOpenFileLimit(1024);
             stopwatch.resetAndLog("Open file limit raise");
             
-            if(ThemeSettings.isBrushedMetalTheme())
-                System.setProperty("apple.awt.brushMetalLook", "true");     
+            //if(ThemeSettings.isBrushedMetalTheme())
+            //    System.setProperty("apple.awt.brushMetalLook", "true");     
 
             MacEventHandler.instance();
             stopwatch.resetAndLog("MacEventHandler instance");

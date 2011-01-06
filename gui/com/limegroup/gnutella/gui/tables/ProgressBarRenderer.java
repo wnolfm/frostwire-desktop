@@ -92,18 +92,18 @@ public class ProgressBarRenderer extends LimeJProgressBar
 		setValue(Math.min(100,getBarStatus(value)));
 		setString(getDescription(value));
 
-        if ( _selectedBorder == null && _unselectedBorder == null ) {
-    		Color sc = table.getSelectionBackground();
-    		Color uc = ((LimeJTable)table).getBackgroundForRow(row);
-    		_selectedBorder = BorderFactory.createMatteBorder(2,5,2,5,sc);
-    		_unselectedBorder = getCachedOrNewBorder(uc);
-        }
-
-		if(isSel) {
-			setBorder(_selectedBorder);
-			setBackground( table.getSelectionBackground() );
-		} else
-			setBorder(_unselectedBorder);
+//        if ( _selectedBorder == null && _unselectedBorder == null ) {
+//    		//Color sc = table.getSelectionBackground();
+//    		//Color uc = ((LimeJTable)table).getBackgroundForRow(row);
+//    		//_selectedBorder = BorderFactory.createMatteBorder(2,5,2,5,sc);
+//    		//_unselectedBorder = getCachedOrNewBorder(uc);
+//        }
+//
+//		if(isSel) {
+//			//setBorder(_selectedBorder);
+//			//setBackground( table.getSelectionBackground() );
+//		} else
+//			//setBorder(_unselectedBorder);
 		return this;
 	}
 	

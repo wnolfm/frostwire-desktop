@@ -295,10 +295,10 @@ public final class TipOfTheDayMediator implements ThemeObserver {
      * Builds the TOTD dialog.
      */
     private void constructDialog() {
-        Color darkColor = Color.BLUE;//ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue().darker();
+        //Color darkColor = Color.BLUE;//ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue().darker();
         
         JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.setBackground(darkColor);
+        //centerPanel.setBackground(darkColor);
         centerPanel.setOpaque(true);
         centerPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
@@ -316,8 +316,8 @@ public final class TipOfTheDayMediator implements ThemeObserver {
         tipPanel.setOpaque(true);
 
         JLabel titleLabel = new JLabel(TOTD_INTRO);
-        titleLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,
-                0, 1, 0, darkColor), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        //titleLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,
+         //       0, 1, 0, darkColor), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         Font titleFont = new Font("Dialog", titleLabel.getFont().getStyle(), titleLabel
                 .getFont().getSize() + 5);
         titleLabel.setFont(titleFont);

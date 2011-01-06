@@ -11,6 +11,9 @@ import javax.swing.Icon;
 
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
+import org.pushingpixels.substance.api.DecorationAreaType;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.SubstanceSkin;
 
 import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTDownloaderImpl;
@@ -1036,8 +1039,8 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	}
 	
 	private void initColors() {
-	    _cellColor = Color.BLUE;//ThemeFileHandler.WINDOW8_COLOR.getValue();
-        _othercellColor = Color.BLUE;//ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
+	    //_cellColor = SubstanceLookAndFeel.getCurrentSkin().// Color.BLUE;//ThemeFileHandler.WINDOW8_COLOR.getValue();
+        //_othercellColor = Color.BLUE;//ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
 	}
 	
 	private Color getColor(boolean playing) {

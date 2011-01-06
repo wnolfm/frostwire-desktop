@@ -144,19 +144,7 @@ public class MonitorView extends JPanel implements ThemeObserver {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(0, pad, pad, pad);
         add(scrollPane, gbc);
-
-		updateTheme();
-		ThemeMediator.addThemeObserver(this);
     }
-
-	/**
-	 * Updates the appearance of this panel based on the current theme.
-	 */
-	public void updateTheme() {
-		Color tableColor = Color.BLUE;//ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-		scrollPane.getViewport().setBackground(tableColor);
-		listOfQueries.setBackground(tableColor);
-	}
 
 	/**
 	 * The user has changed the desired list size, so enact the change. 

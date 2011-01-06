@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.tables;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.IllegalComponentStateException;
 import java.awt.Point;
@@ -482,19 +481,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         tablePane.add(SCROLL_PANE);
 
         TABLE_PANE = tablePane;
-        updateTheme();
-        return tablePane;
-    }
-
-    // inherit doc comment
-    public void updateTheme() {
-        Color tableColor = Color.BLUE;// ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-        if (TABLE_PANE == null) return;
-
-        TABLE_PANE.setBackground(tableColor);
-        TABLE.setBackground(tableColor);
         TABLE.setOpaque(true);
-        SCROLL_PANE.getViewport().setBackground(tableColor);
+        return tablePane;
     }
 
     /**
