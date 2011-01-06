@@ -591,13 +591,13 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	// inherit doc comment
 	public void updateTheme() {
 	    ProgTabUIFactory.extendUI(tabbedPane);
-		DUMMY.updateTheme();
+		//DUMMY.updateTheme();
 		OVERLAY.updateTheme();
 		CancelSearchIconProxy.updateTheme();
 		fixIcons();
 		for(Iterator<ResultPanel> i = entries.iterator(); i.hasNext(); ) {
 			ResultPanel curPanel = (ResultPanel)i.next();
-			curPanel.updateTheme();
+			//curPanel.updateTheme();
 		}
 	}
     

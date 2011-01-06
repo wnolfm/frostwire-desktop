@@ -161,7 +161,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     }
 
     public void updateTheme() {
-        super.updateTheme();
+       // super.updateTheme();
         
         //STORE_RENDERER.updateTheme();
         //STORE_EDITOR.updateTheme();
