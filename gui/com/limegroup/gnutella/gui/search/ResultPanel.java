@@ -214,6 +214,9 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         // disable dnd for overlay panel
         TABLE.setDragEnabled(false);
         TABLE.setTransferHandler(null);
+        //TABLE.setOpaque(true);
+        //TABLE.setBackground(Color.WHITE);
+        //TABLE.getTableHeader().setOpaque(true);
         
         SOUTH_PANEL.setVisible(false);
         
