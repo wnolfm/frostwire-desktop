@@ -29,7 +29,7 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
  *
  * (A collection of RemoteFileDesc, HostData, and Set of alternate locations.)
  */
-final class GnutellaSearchResult extends AbstractSearchResult {
+public final class GnutellaSearchResult extends AbstractSearchResult {
     private final RemoteFileDesc RFD;
     private final HostData DATA;
     private Set<IpPort> _alts;
@@ -52,7 +52,7 @@ final class GnutellaSearchResult extends AbstractSearchResult {
     }
     
     /** Gets the RemoteFileDesc */
-    RemoteFileDesc getRemoteFileDesc() { return RFD; }
+    public RemoteFileDesc getRemoteFileDesc() { return RFD; }
     
     /** Gets the HostData */
     HostData getHostData() { return DATA; }

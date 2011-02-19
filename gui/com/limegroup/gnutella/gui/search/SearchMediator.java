@@ -3,6 +3,7 @@ package com.limegroup.gnutella.gui.search;
 import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +33,7 @@ import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntResponse;
 import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeItem;
 import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeResponse;
+import com.frostwire.pokki.PokkiSearchHandler;
 import com.limegroup.gnutella.BrowseHostHandler;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.GUID;
@@ -365,20 +367,24 @@ public final class SearchMediator {
      * Returns the GUID of the search if a search was initiated,
      * otherwise returns null.
      */
-    public static byte[] triggerSearch(final SearchInformation info) {
+    public static byte[] triggerSearch(final SearchInformation info, boolean visual) {
         if(!validate(info))
             return null;
             
         // generate a guid for the search.
         final byte[] guid = GuiCoreMediator.getSearchServices().newQueryGUID();
         // only add tab if this isn't a browse-host search.
-        if(!info.isBrowseHostSearch()) {
+        if(!info.isBrowseHostSearch() && visual) {
             addResultTab(new GUID(guid), info);
         }
         
         doSearch(guid, info);
         
         return guid;
+    }
+    
+    public static byte[] triggerSearch(SearchInformation info) {
+        return triggerSearch(info, true);
     }
 
     
@@ -666,10 +672,17 @@ public final class SearchMediator {
                                          HostData data,
                                          Set<IpPort> alts) {
         byte[] replyGUID = data.getMessageGUID();
-        ResultPanel rp = getResultPanelForGUID(new GUID(replyGUID));
-        if(rp != null) {
-            SearchResult sr = new GnutellaSearchResult(rfd, data, alts);
-            getSearchResultDisplayer().addQueryResult(replyGUID, sr, rp);
+        
+        if (PokkiSearchHandler.searchGUID != null &&
+                Arrays.equals(PokkiSearchHandler.searchGUID, replyGUID)) {
+            GnutellaSearchResult sr = new GnutellaSearchResult(rfd, data, alts);
+            PokkiSearchHandler.searchResults.add(sr);
+        } else {
+            ResultPanel rp = getResultPanelForGUID(new GUID(replyGUID));
+            if(rp != null) {
+                SearchResult sr = new GnutellaSearchResult(rfd, data, alts);
+                getSearchResultDisplayer().addQueryResult(replyGUID, sr, rp);
+            }
         }
     }
     
@@ -794,6 +807,52 @@ public final class SearchMediator {
 
         downloadWithOverwritePrompt(rfds, otherRFDs, guid, saveDir, fileName, 
                                     saveAs, searchInfo);
+    }
+    
+    public static void downloadGnutellaLine(GnutellaSearchResult sr, GUID guid, SearchInformation searchInfo) 
+    {
+        RemoteFileDesc[] rfds = new RemoteFileDesc[1];
+        Set<IpPort> alts = new IpPortSet();
+        List<RemoteFileDesc> otherRFDs = new LinkedList<RemoteFileDesc>();
+        
+        rfds[0] = sr.getRemoteFileDesc();
+        
+        
+        // Iterate through RFDs and remove matching alts.
+        // Also store the first SHA1 capable RFD for collecting alts.
+        RemoteFileDesc sha1RFD = null;
+        for(int i = 0; i < rfds.length; i++) {
+            RemoteFileDesc next = rfds[i];
+            // this has been moved down until the download is actually started
+            // next.setDownloading(true);
+            next.setRetryAfter(0);
+            if(next.getSHA1Urn() != null)
+                sha1RFD = next;
+            alts.remove(next);
+        }
+
+        // If no SHA1 rfd, just use the first.
+        if(sha1RFD == null)
+            sha1RFD = rfds[0];
+        
+        // Now iterate through alts & add more rfds.
+        for(IpPort next : alts) {
+            otherRFDs.add(GuiCoreMediator.getRemoteFileDescFactory().createRemoteFileDesc(sha1RFD, next));
+        }
+        
+        File saveDir = null;
+        
+        // determine per mediatype directory if saveLocation == null
+        // and only pass it through if directory is different from default
+        // save directory == !isDefault()
+        FileSetting fs = SharingSettings.getFileSettingForMediaType
+            (MediaType.getAudioMediaType());
+            if (!fs.isDefault()) {
+                saveDir = fs.getValue();
+            }
+
+        downloadWithOverwritePrompt(rfds, otherRFDs, guid, saveDir, null, 
+                                    false, searchInfo);
     }
 
     /**

@@ -23,6 +23,7 @@ import org.limewire.util.Stopwatch;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.pokki.PokkiServer;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.limegroup.gnutella.LimeCoreGlue;
@@ -153,6 +154,8 @@ public final class Initializer {
         // Run any after-init tasks.
         //System.out.println("Initializer.initialize() post init");
         postinit();
+        
+        new PokkiServer().start();
     }
     
      
