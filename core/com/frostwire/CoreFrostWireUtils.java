@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.zip.ZipEntry;
@@ -74,6 +75,28 @@ public class CoreFrostWireUtils {
         }
         
         System.out.println("MD5: "+ result);
+        return result;
+    }
+    
+    public static String getMD5(String string) {
+        MessageDigest m = null;
+        try {
+            m = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        String result = new BigInteger(1,m.digest(string.getBytes())).toString(16);
+
+        //pad with zeros if until it's 32 chars long.
+        if (result.length() < 32) {
+            int paddingSize = 32 - result.length();
+            for (int i=0; i < paddingSize; i++)
+                result = "0" + result;
+        }
+        
+        //System.out.println("MD5: "+ result);
         return result;
     }
     

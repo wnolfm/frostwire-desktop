@@ -3,11 +3,15 @@ package com.frostwire.pokki;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.MessageDigest;
 
 import org.limewire.io.IOUtils;
 import org.limewire.setting.FileSetting;
 
+import com.frostwire.CoreFrostWireUtils;
+import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.library.DirectoryHolder;
 import com.limegroup.gnutella.gui.library.MediaTypeSavedFilesDirectoryHolder;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
@@ -34,16 +38,20 @@ public class PokkiLibraryHandler implements HttpHandler {
             
             File[] files = dh.getFiles();
             
-            String prefix = "{\"files\":[";
-            String postfix = "]}";
+            String prefix = "[";
+            String postfix = "]";
 
             os.write(prefix.getBytes());
             
-            for (int i = 0; i < files.length; i++) {
+            for (int i = 1; i <= files.length; i++) {
                 
-                String json = files[i].getName() + ", ";
+                String json = toJSON(files[i-1]);
                 
                 os.write(json.getBytes());
+                
+                if (i < files.length) {
+                    os.write(",".getBytes());
+                }
             }
 
             os.write(postfix.getBytes());
@@ -56,5 +64,22 @@ public class PokkiLibraryHandler implements HttpHandler {
             IOUtils.close(os);
             exchange.close();
         }
+    }
+    
+    public String toJSON(File f) {
+        JSONLibraryFile file = new JSONLibraryFile();
+        try {
+            file.urn = CoreFrostWireUtils.getMD5(f.getName());
+            file.name = f.getName().replaceAll("_", " ").replace("  ", " ");
+        } catch (Exception e) {
+            return null;
+        }
+        
+        return new JsonEngine().toJson(file);
+    }
+    
+    class JSONLibraryFile {
+        public String name;
+        public String urn;
     }
 }
