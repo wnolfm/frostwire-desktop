@@ -9,7 +9,9 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.limewire.io.IOUtils;
 
+import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.search.GnutellaSearchResult;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
@@ -65,8 +67,8 @@ public class PokkiSearchHandler implements HttpHandler {
                 }
             }
             
-            String prefix = "{\"files\":[";
-            String postfix = "]}";
+            String prefix = "[";
+            String postfix = "]";
 
             os.write(prefix.getBytes());
 
@@ -74,9 +76,9 @@ public class PokkiSearchHandler implements HttpHandler {
 
             for (int i = 1; i <= size; i++) {
 
-                GnutellaSearchResult sr = searchResults.get(i);
+                GnutellaSearchResult sr = searchResults.get(i - 1);
                 
-                String json = sr.getFileName() + ":" + sr.getSHA1Urn() + ",     ";
+                String json = getJson(sr);
                 
                 os.write(json.getBytes());
 
@@ -95,5 +97,28 @@ public class PokkiSearchHandler implements HttpHandler {
             IOUtils.close(os);
             exchange.close();
         }
+    }
+    
+    public class JsonSearchResult {
+        public String name;
+        public String urn;
+        public int stars;
+        public String size;
+    }
+    
+    private String getJson(GnutellaSearchResult sr) {
+        
+        JsonSearchResult json = new JsonSearchResult();
+        
+        json.name = sr.getFilenameNoExtension();
+        json.urn = sr.getSHA1Urn().toString().replace("urn:sha1:", "");
+        json.stars = 4; // TODO: group the results and rank
+        json.size = GUIUtils.toUnitbytes(sr.getSize());
+        
+        return new JsonEngine().toJson(json);
+    }
+    
+    private int qualityToStars(int quality) {
+        return 4;
     }
 }
