@@ -12,7 +12,7 @@ public class PokkiServer {
 
         try {
             
-            _httpServer = HttpServer.create(new InetSocketAddress(8787), 10);
+            _httpServer = HttpServer.create(new InetSocketAddress(8788), 100);
             
             _httpServer.createContext("/search", new PokkiSearchHandler());
             _httpServer.createContext("/library", new PokkiLibraryHandler());

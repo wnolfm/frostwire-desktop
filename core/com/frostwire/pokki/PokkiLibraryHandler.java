@@ -3,7 +3,6 @@ package com.frostwire.pokki;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.security.MessageDigest;
 
 import org.limewire.io.IOUtils;
 import org.limewire.setting.FileSetting;
@@ -11,7 +10,6 @@ import org.limewire.setting.FileSetting;
 import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.library.DirectoryHolder;
 import com.limegroup.gnutella.gui.library.MediaTypeSavedFilesDirectoryHolder;
 import com.limegroup.gnutella.gui.search.NamedMediaType;

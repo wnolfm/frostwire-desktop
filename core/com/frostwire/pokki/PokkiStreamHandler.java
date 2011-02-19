@@ -13,7 +13,6 @@ import org.limewire.setting.FileSetting;
 
 import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.library.DirectoryHolder;
 import com.limegroup.gnutella.gui.library.MediaTypeSavedFilesDirectoryHolder;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
@@ -41,26 +40,20 @@ public class PokkiStreamHandler implements HttpHandler {
             }
             
             File file = getLibraryFile(urnParam);
-            exchange.getResponseHeaders().add("Content-Type", "audio/x-mp3");
-            exchange.getResponseHeaders().add("Content-Transfer-Encoding", "binary");
-            exchange.getResponseHeaders().add("Connection", "close");
+            //exchange.getResponseHeaders().add("Content-Type", "audio/mpeg");
+            //exchange.getResponseHeaders().add("Content-Transfer-Encoding", "binary");
+            //exchange.getResponseHeaders().add("Connection", "close");
             exchange.sendResponseHeaders(Code.HTTP_OK, file.length());
 
             os = exchange.getResponseBody();
 
             fis = new FileInputStream(file.getAbsolutePath());
 
-            byte[] buffer = new byte[1];
+            byte[] buffer = new byte[4 * 1024];
             int n;
 
             while ((n = fis.read(buffer, 0, buffer.length)) != -1) {
                 os.write(buffer, 0, n);
-                /*try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }*/
             }
         
         } catch (IOException e) {
