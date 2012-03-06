@@ -26,11 +26,15 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import org.gudy.azureus2.core3.logging.LogEvent;
+import org.gudy.azureus2.core3.logging.LogIDs;
 import org.gudy.azureus2.core3.logging.LogRelation;
+import org.gudy.azureus2.core3.logging.Logger;
 import org.gudy.azureus2.core3.torrent.*;
 import org.gudy.azureus2.core3.util.*;
 
 import com.aelitis.azureus.core.AzureusCoreFactory;
+import com.aelitis.azureus.core.peermanager.messaging.MessagingUtil;
 
 public class 
 TOTorrentImpl
@@ -1332,4 +1336,38 @@ TOTorrentImpl
 
 		return null;
 	}
+	
+	// ut_metadata
+	private Map<Integer, byte[]> ut_metadata_bytes_pieces;
+	
+	public Map<Integer, byte[]> getMetadataBytesPieces() {
+	    if (ut_metadata_bytes_pieces == null) {
+	        ut_metadata_bytes_pieces = new HashMap<Integer, byte[]>(); 
+	        buildMetadataBytesPieces();
+	    }
+	    
+	    return ut_metadata_bytes_pieces;
+	}
+	
+	private void buildMetadataBytesPieces() {
+        try {
+            Map map = serialiseToMap();
+            Map info = (Map) map.get("info");
+            DirectByteBuffer buffer = MessagingUtil.convertPayloadToBencodedByteStream(info, DirectByteBuffer.AL_MSG_UT_METADATA);
+            int maxSize = 16 * 1024; // 16kiB from http://bittorrent.org/beps/bep_0009.html
+            int size = 0;
+            int piece = 0;
+            while ((size = Math.min(buffer.remaining(DirectByteBuffer.SS_MSG), maxSize)) > 0) {
+                byte[] piece_bytes = new byte[size];
+                buffer.get(DirectByteBuffer.SS_MSG, piece_bytes);
+                ut_metadata_bytes_pieces.put(piece, piece_bytes);
+                
+            }
+        } catch (Throwable e) {
+            if (Logger.isEnabled()) { // not sure about the log id
+                Logger.log(new LogEvent(this, LogIDs.CORE, "buildMetadataBytesPieces()", e));
+            }
+            ut_metadata_bytes_pieces.clear();
+        }
+    }
 }
