@@ -19,6 +19,8 @@ public class SmartSearchDB {
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
     
+    public static final int ASYNC_OBJECT_NOT_PROCESSED = Integer.MIN_VALUE;
+    
     public static final int SMART_SEARCH_DATABASE_VERSION = 5;
 
     private final File _databaseFile;
@@ -112,6 +114,55 @@ public class SmartSearchDB {
 
         return OBJECT_INVALID_ID;
     }
+    
+    /**
+     * Some SQL operations depend on an a identifier that has been generated
+     * automatically.
+     * 
+     * Given that the synchronized insertion is causing +100% CPU usage, we'll make
+     * insertion asynchronous and when we have an ID we'll continue the rest of the logic
+     * by implementing an IdentitySQLCallback.
+     *
+     * @see SmartSearchDB#insertAsync(String, IdentitySQLCallback, Object...)
+     * 
+     * @author gubatron
+     *
+     */
+    public abstract class IdentitySQLCallback implements Runnable {
+        protected final int newId;
+        private int resultCode;
+        
+        public IdentitySQLCallback(int newId) {
+            this.newId = newId;
+            setResultCode(ASYNC_OBJECT_NOT_PROCESSED);
+        }
+        
+        public void setResultCode(int resultCode) {
+            this.resultCode = resultCode;
+        }
+        
+        public int getResultCode() {
+            return this.resultCode;
+        }
+        
+        @Override
+        abstract public void run();
+    }
+    
+    public void insertAsync(String statementSql, IdentitySQLCallback callback, Object... arguments ) {
+        if (isClosed()) {
+            callback.setResultCode(OBJECT_INVALID_ID);
+            return;
+        }
+
+        if (!statementSql.toUpperCase().startsWith("INSERT")) {
+            callback.setResultCode(OBJECT_INVALID_ID);
+            return;
+        }
+
+        updateAsync(statementSql, callback, arguments);
+    }
+        
     
     /**
      * This method is synchronized due to possible concurrent issues, specially
