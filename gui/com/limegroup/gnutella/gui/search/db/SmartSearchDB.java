@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import org.limewire.util.FileUtils;
 
@@ -203,13 +205,13 @@ public class SmartSearchDB {
             return;
         }
         
-        QueueProcessor.INSTANCE.addTask(callbackTask);        
+        QueueProcessor.instance().addTask(callbackTask);        
     }
     
-    private static class QueueProcessor<IdentitySQLCallback> {
+    private static class QueueProcessor {
         private static QueueProcessor INSTANCE  = new QueueProcessor();
          
-        private BlockingQueue<IdentitySQLCallback> queue;
+        private Executor executor = Executors.newSingleThreadExecutor();
         
         private QueueProcessor() {
             
@@ -222,8 +224,8 @@ public class SmartSearchDB {
             return INSTANCE;
         }
         
-        public void addTask(IdentitySQLCallback callback) {
-            queue.add(callback);
+        public void addTask(IdentitySQLCallbackTask callback) {
+            executor.execute(callback);
         }
     }
     
