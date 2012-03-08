@@ -11,6 +11,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import org.limewire.util.FileUtils;
 
@@ -18,6 +21,8 @@ public class SmartSearchDB {
 
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
+    
+    public static final int ASYNC_OBJECT_NOT_PROCESSED = Integer.MIN_VALUE;
     
     public static final int SMART_SEARCH_DATABASE_VERSION = 5;
 
@@ -111,6 +116,117 @@ public class SmartSearchDB {
         }
 
         return OBJECT_INVALID_ID;
+    }
+    
+    /**
+     * Some SQL operations depend on an a identifier that has been generated
+     * automatically.
+     * 
+     * Given that the synchronized insertion is causing +100% CPU usage, we'll make
+     * insertion asynchronous and when we have an ID we'll continue the rest of the logic
+     * by implementing an IdentitySQLCallback.
+     *
+     * @see SmartSearchDB#insertAsync(String, IdentitySQLCallbackTask, Object...)
+     * 
+     * @author gubatron
+     *
+     */
+    public abstract class IdentitySQLCallbackTask implements Runnable {
+        protected int newId;
+        private int resultCode;
+        private String sql;
+        private Object[] arguments;
+        
+        /**
+         * @param sql - The SQL for the first insert/update task.
+         * @param arguments - Arguments to be passed to the SQL of the first task
+         */
+        public IdentitySQLCallbackTask(String sql, Object ... arguments) {
+            this.newId = newId;
+            setResultCode(ASYNC_OBJECT_NOT_PROCESSED);
+            setSQL(sql);
+            setArguments(arguments);
+        }
+        
+        public void setResultCode(int resultCode) {
+            this.resultCode = resultCode;
+        }
+        
+        public int getResultCode() {
+            return resultCode;
+        }
+        
+        public void setSQL(String sql) {
+            this.sql = sql;
+        }
+        
+        public String getSQL() {
+            return sql;
+        }
+        
+        public void setArguments(Object ... args) {
+            arguments = args;
+        }
+        
+        public Object[] getArguments() {
+            return arguments;
+        }
+        
+        public void setNewId(int newId) {
+            this.newId = newId;
+        }
+        
+        public int getNewId() {
+            return newId;
+        }
+        
+        @Override
+        /** The logic defined here is what happens after, and you are supposed to use the new ID you receive here*/
+        abstract public void run();
+    }
+    
+    /**
+     * @param callbackTask -
+     * @param arguments
+     */
+    public void insertAsync(IdentitySQLCallbackTask callbackTask) {
+        if (!callbackTask.getSQL().toUpperCase().startsWith("INSERT")) {
+            callbackTask.setResultCode(OBJECT_INVALID_ID);
+            return;
+        }
+
+        updateAsync(callbackTask);
+    }
+
+    
+    public void updateAsync(IdentitySQLCallbackTask callbackTask) {
+        if (isClosed()) {
+            callbackTask.setResultCode(OBJECT_INVALID_ID);
+            return;
+        }
+        
+        QueueProcessor.instance().addTask(callbackTask);        
+    }
+    
+    private static class QueueProcessor {
+        private static QueueProcessor INSTANCE  = new QueueProcessor();
+         
+        private Executor executor = Executors.newSingleThreadExecutor();
+        
+        private QueueProcessor() {
+            
+        }
+        
+        public static QueueProcessor instance() {
+            if (INSTANCE==null) {
+                INSTANCE = new QueueProcessor();
+            }
+            return INSTANCE;
+        }
+        
+        public void addTask(IdentitySQLCallbackTask callback) {
+            executor.execute(callback);
+        }
     }
     
     /**

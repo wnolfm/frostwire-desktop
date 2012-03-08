@@ -117,7 +117,7 @@ public class LocalSearchEngine {
      * if there are matches.
      */
     public List<SmartSearchResult> search(String query) {
-        query = LibraryUtils.fuzzyLuceneQuery(query);
+        query = LibraryUtils.prepareFuzzyLuceneQuery(query);
 
         //FULL TEXT SEARCH, Returns the File IDs we care about.
         String fullTextIndexSql = "SELECT * FROM FTL_SEARCH(?, ?, 0)";
