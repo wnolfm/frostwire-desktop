@@ -1,44 +1,60 @@
 package com.frostwire.gui.components;
 
-import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Rectangle;
 
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.ProgressEvent;
+import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-public class BrowserCtl extends JComponent {
+public class BrowserCtl extends JPanel {
 
     private static final long serialVersionUID = -3684839610832779726L;
+
+    private final JFrame frame;
+    private final String url;
 
     private Canvas canvas;
     private Browser browser;
 
-    public BrowserCtl() {
-        setLayout(new BorderLayout());
+    public BrowserCtl(JFrame frame, String url) {
+        this.frame = frame;
+        this.url = url;
+
+        setLayout(new FlowLayout());
+        setOpaque(false);
     }
 
-    public void setUrl(final String url) {
+    @Override
+    public void invalidate() {
+        super.invalidate();
+
+        if (browser != null) {
+            updateCanvasSize();
+        } else {
+            setUrl(url);
+        }
+    }
+
+    private void setUrl(final String url) {
         connect();
 
         browser.getDisplay().asyncExec(new Runnable() {
             @Override
             public void run() {
                 browser.setUrl(url);
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        // find the right way to refresh the component
-                    }
-                });
             }
         });
     }
@@ -46,21 +62,55 @@ public class BrowserCtl extends JComponent {
     private void connect() {
         if (browser == null) {
             canvas = new Canvas();
-            add(canvas, BorderLayout.CENTER);
+            updateCanvasSize();
+            add(canvas);
 
             browser = SWTFramework.instance().createBrowser(canvas);
+            frame.repaint();
 
             browser.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     browser.addListener(SWT.MenuDetect, new Listener() {
+                        @Override
                         public void handleEvent(Event event) {
                             event.doit = false;
+                        }
+                    });
+
+                    browser.addProgressListener(new ProgressListener() {
+                        @Override
+                        public void completed(ProgressEvent event) {
+                            refreshCtl();
+                        }
+
+                        @Override
+                        public void changed(ProgressEvent event) {
                         }
                     });
                 }
             });
         }
+    }
+
+    private void updateCanvasSize() {
+        if (canvas != null) {
+            Rectangle r = getVisibleRect();
+            Dimension d = new Dimension(r.width, r.height - 8);
+            canvas.setPreferredSize(d);
+            canvas.setSize(d);
+            canvas.setMinimumSize(d);
+            canvas.setMaximumSize(d);
+        }
+    }
+
+    private void refreshCtl() {
+        browser.getDisplay().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                browser.getShell().setSize(canvas.getWidth(), canvas.getHeight());
+            }
+        });
     }
 
     private static final class SWTFramework {
