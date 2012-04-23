@@ -1,6 +1,7 @@
 package com.frostwire.gui.components;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Rectangle;
@@ -18,6 +19,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.limewire.util.OSUtils;
 
 public class BrowserCtl extends JPanel {
 
@@ -27,6 +29,7 @@ public class BrowserCtl extends JPanel {
     private final String url;
 
     private Canvas canvas;
+    private CreateBrowser createBrowser;
     private Browser browser;
 
     public BrowserCtl(JFrame frame, String url) {
@@ -62,10 +65,12 @@ public class BrowserCtl extends JPanel {
     private void connect() {
         if (browser == null) {
             canvas = new Canvas();
+            canvas.setBackground(Color.WHITE);
             updateCanvasSize();
             add(canvas);
 
-            browser = SWTFramework.instance().createBrowser(canvas);
+            createBrowser = SWTFramework.instance().createBrowser(canvas);
+            browser = createBrowser.getBrowser();
             frame.repaint();
 
             browser.getDisplay().asyncExec(new Runnable() {
@@ -88,6 +93,25 @@ public class BrowserCtl extends JPanel {
                         public void changed(ProgressEvent event) {
                         }
                     });
+                }
+            });
+
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {
+                    disconnect();
+                }
+            });
+        }
+    }
+
+    public void disconnect() {
+        if (createBrowser != null) {
+            createBrowser.finish();
+
+            browser.getDisplay().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    browser.getDisplay().dispose();
                 }
             });
         }
@@ -132,9 +156,14 @@ public class BrowserCtl extends JPanel {
         private SWTFramework() {
         }
 
-        public Browser createBrowser(Canvas canvas) {
+        public CreateBrowser createBrowser(Canvas canvas) {
             CreateBrowser cb = new CreateBrowser(canvas);
-            com.apple.concurrent.Dispatch.getInstance().getNonBlockingMainQueueExecutor().execute(cb);
+            if (OSUtils.isMacOSX()) {
+                com.apple.concurrent.Dispatch.getInstance().getNonBlockingMainQueueExecutor().execute(cb);
+            } else {
+                Thread t = new Thread(cb, "SWT-Thread");
+                t.start();
+            }
 
             synchronized (cb) {
                 while (cb.getBrowser() == null) {
@@ -146,46 +175,51 @@ public class BrowserCtl extends JPanel {
                 }
             }
 
-            return cb.getBrowser();
+            return cb;
+        }
+    }
+
+    private static class CreateBrowser implements Runnable {
+
+        private final Canvas canvas;
+
+        private boolean finished;
+        private Browser browser;
+
+        public CreateBrowser(Canvas canvas) {
+            this.canvas = canvas;
         }
 
-        private static class CreateBrowser implements Runnable {
+        public Browser getBrowser() {
+            return browser;
+        }
 
-            private final Canvas canvas;
+        public void finish() {
+            finished = true;
+        }
 
-            private Browser browser;
+        @Override
+        public void run() {
+            try {
+                Display display = new Display();
+                Shell shell = SWT_AWT.new_Shell(display, canvas);
+                shell.setLayout(new FillLayout());
 
-            public CreateBrowser(Canvas canvas) {
-                this.canvas = canvas;
-            }
-
-            public Browser getBrowser() {
-                return browser;
-            }
-
-            @Override
-            public void run() {
-                try {
-                    Display display = new Display();
-                    Shell shell = SWT_AWT.new_Shell(display, canvas);
-                    shell.setLayout(new FillLayout());
-
-                    synchronized (this) {
-                        browser = new Browser(shell, SWT.NONE);
-                        this.notifyAll();
-                    }
-
-                    shell.open();
-                    while (!shell.isDisposed()) {
-                        if (!display.readAndDispatch()) {
-                            display.sleep();
-                        }
-                    }
-                    shell.dispose();
-                    display.dispose();
-                } catch (Throwable e) {
-                    e.printStackTrace();
+                synchronized (this) {
+                    browser = new Browser(shell, SWT.NONE);
+                    this.notifyAll();
                 }
+
+                shell.open();
+                while (!finished && !shell.isDisposed()) {
+                    if (!display.readAndDispatch()) {
+                        display.sleep();
+                    }
+                }
+                //shell.dispose();
+                //display.dispose();
+            } catch (Throwable e) {
+                e.printStackTrace();
             }
         }
     }
