@@ -26,6 +26,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.TabbedPaneUI;
 
+import com.frostwire.gui.components.BrowserCtl;
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
 import com.limegroup.gnutella.GUID;
@@ -136,8 +137,33 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	        promoSlides.setPreferredSize(promoDimensions);
 	        promoSlides.setSize(promoDimensions);
 	        promoSlides.setMaximumSize(promoDimensions);
+	        
+	        // test for web browser
+	        
+	        final BrowserCtl ctl = new BrowserCtl();
+	        Dimension d = new Dimension(717, 380);
+	        ctl.setPreferredSize(d);
+	        ctl.setSize(d);
+	        ctl.setMaximumSize(d);
+	        new Thread(new Runnable() {
+	            @Override
+	            public void run() {
+	                try {
+	                    Thread.sleep(10000);
+	                } catch (InterruptedException e) {
+
+	                }
+
+	                SwingUtilities.invokeLater(new Runnable() {
+	                    @Override
+	                    public void run() {
+	                        ctl.setUrl("http://www.frostwire.com");
+	                    }
+	                });
+	            }
+	        }).start();
 	
-	        DUMMY = new SearchResultMediator(promoSlides);
+	        DUMMY = new SearchResultMediator(ctl);
 			
 			mainScreen = new JPanel(new BorderLayout());
 	        promoSlides.setupContainerAndControls(mainScreen,true);

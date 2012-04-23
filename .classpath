@@ -34,5 +34,6 @@
 	<classpathentry kind="lib" path="lib/jars/MRJAdapter.jar"/>
 	<classpathentry kind="lib" path="lib/jars/h2-1.3.164.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/lucene-3.5.0.jar" sourcepath="lib/jars-src"/>
+	<classpathentry kind="lib" path="lib/jars/swt-webbrowser-mac.jar" sourcepath="lib/jars-src/swt-webbrowser/swt-webbrowser-mac"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
