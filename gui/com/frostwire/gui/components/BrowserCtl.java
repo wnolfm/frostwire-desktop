@@ -108,12 +108,14 @@ public class BrowserCtl extends JPanel {
         if (createBrowser != null) {
             createBrowser.finish();
 
-            browser.getDisplay().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    browser.getDisplay().dispose();
-                }
-            });
+            if (!browser.isDisposed()) {
+                browser.getDisplay().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        browser.getDisplay().dispose();
+                    }
+                });
+            }
         }
     }
 
