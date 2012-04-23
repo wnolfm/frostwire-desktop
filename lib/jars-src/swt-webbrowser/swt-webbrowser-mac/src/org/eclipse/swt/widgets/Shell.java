@@ -519,7 +519,7 @@ void attachObserversToWindow(NSWindow newWindow) {
 	defaultCenter.addObserver(windowDelegate, OS.sel_windowDidMove_, OS.NSWindowDidMoveNotification, hostWindow);
 	defaultCenter.addObserver(windowDelegate, OS.sel_windowDidResize_, OS.NSWindowDidResizeNotification, hostWindow);
 	defaultCenter.addObserver(windowDelegate, OS.sel_windowDidResignKey_, OS.NSWindowDidResignKeyNotification, hostWindow);
-	defaultCenter.addObserver(windowDelegate, OS.sel_windowWillClose_, OS.NSWindowWillCloseNotification, hostWindow);
+	//defaultCenter.addObserver(windowDelegate, OS.sel_windowWillClose_, OS.NSWindowWillCloseNotification, hostWindow);
 }
 
 void becomeKeyWindow (long /*int*/ id, long /*int*/ sel) {

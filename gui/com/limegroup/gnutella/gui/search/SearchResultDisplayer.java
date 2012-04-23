@@ -102,6 +102,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     private final PaneListener PANE_LISTENER = new PaneListener();
 
     private SlideshowPanel promoSlides;
+    private BrowserCtl browserCtl;
 
     /**
      * Constructs the search display elements.
@@ -139,14 +140,14 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
             // test for web browser
 
-            final BrowserCtl ctl = new BrowserCtl(GUIMediator.getAppFrame(), "http://www.frostwire.com");
-            ctl.setBackground(Color.WHITE);
+            browserCtl = new BrowserCtl(GUIMediator.getAppFrame(), "http://www.frostwire.com");
+            browserCtl.setBackground(Color.WHITE);
             Dimension d = new Dimension(717, 380);
-            ctl.setPreferredSize(d);
-            ctl.setSize(d);
-            ctl.setMaximumSize(d);
+            browserCtl.setPreferredSize(d);
+            browserCtl.setSize(d);
+            browserCtl.setMaximumSize(d);
 
-            DUMMY = new SearchResultMediator(ctl);
+            DUMMY = new SearchResultMediator(browserCtl);
 
             mainScreen = new JPanel(new BorderLayout());
             promoSlides.setupContainerAndControls(mainScreen, true);
@@ -310,6 +311,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         //if (OVERLAY != null)
         // 	OVERLAY.searchPerformed();
 
+        browserCtl.setVisible(false);
         switcher.last(results); //show tabbed results
 
         // If there are lots of tabs, this ensures everything
@@ -515,6 +517,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         if (entries.size() == 0) {
             try {
+                browserCtl.setVisible(true);
                 switcher.first(results); //show dummy table
             } catch (ArrayIndexOutOfBoundsException aioobe) {
                 //happens on jdk1.5 beta w/ windows XP, ignore.
