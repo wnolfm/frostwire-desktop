@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.BrowserFunction;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -31,6 +32,8 @@ public class BrowserCtl extends JPanel {
     private Canvas canvas;
     private CreateBrowser createBrowser;
     private Browser browser;
+
+    private TestFunction testFunction;
 
     public BrowserCtl(JFrame frame, String url) {
         this.frame = frame;
@@ -87,12 +90,17 @@ public class BrowserCtl extends JPanel {
                         @Override
                         public void completed(ProgressEvent event) {
                             refreshCtl();
+
+                            //test js
+                            browser.evaluate("alert(testFunction('testing java-js integration'))");
                         }
 
                         @Override
                         public void changed(ProgressEvent event) {
                         }
                     });
+
+                    testFunction = new TestFunction(browser);
                 }
             });
 
@@ -112,6 +120,9 @@ public class BrowserCtl extends JPanel {
                 browser.getDisplay().asyncExec(new Runnable() {
                     @Override
                     public void run() {
+                        if (!testFunction.isDisposed()) {
+                            testFunction.dispose();
+                        }
                         browser.getDisplay().dispose();
                     }
                 });
@@ -223,6 +234,18 @@ public class BrowserCtl extends JPanel {
             } catch (Throwable e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private static class TestFunction extends BrowserFunction {
+
+        public TestFunction(Browser browser) {
+            super(browser, "testFunction");
+        }
+
+        @Override
+        public Object function(Object[] arguments) {
+            return arguments[0];
         }
     }
 }

@@ -140,7 +140,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
             // test for web browser
 
-            browserCtl = new BrowserCtl(GUIMediator.getAppFrame(), "http://www.frostwire.com");
+            browserCtl = new BrowserCtl(GUIMediator.getAppFrame(), "http://update.frostwire.com/android.promos.php");
             browserCtl.setBackground(Color.WHITE);
             Dimension d = new Dimension(717, 380);
             browserCtl.setPreferredSize(d);
