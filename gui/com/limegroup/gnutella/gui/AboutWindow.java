@@ -295,6 +295,14 @@ final class AboutWindow {
 
         sb.append(I18n.tr("<h1>Thanks to the NSIS Project</h1>"));
         sb.append(I18n.tr("<p>Thanks for such an awesome installer builder system and documentation.</p>"));
+        
+        // Translators
+        sb.append("<h1>Thanks to the Translators</h1>");
+        String translators = "Serra E. (TR),Tatiana Wiedemann (PT-BR),Jerome M (PR),Expertz Y. (NB),Nicolina VC (NL),Christian S. (DE),Shila Kumar (HI),Kris R. (FIL),Katia R.(IT),Yoshitaka S. (JP),Hyemin K. (KO),Ooi Lu Lee (zh_HK), Junyou Chen (zh_TW|zh_CN)";
+        sb.append("<ul>");
+        appendListOfNames(translators, sb);
+        sb.append("</ul>");
+
 
         sb.append(I18n.tr("<h1>Thanks to our families</h1>"));
         sb.append(I18n.tr("For being patient during our many sleepless nights"));        
