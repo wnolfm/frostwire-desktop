@@ -22,6 +22,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.limewire.util.OSUtils;
 
+import com.limegroup.gnutella.gui.GUIMediator;
+
 public class BrowserCtl extends JPanel {
 
     private static final long serialVersionUID = -3684839610832779726L;
@@ -34,6 +36,7 @@ public class BrowserCtl extends JPanel {
     private Browser browser;
 
     private TestFunction testFunction;
+    private StartDownload startDownload;
 
     public BrowserCtl(JFrame frame, String url) {
         this.frame = frame;
@@ -92,7 +95,9 @@ public class BrowserCtl extends JPanel {
                             refreshCtl();
 
                             //test js
-                            browser.evaluate("alert(testFunction('testing java-js integration'))");
+                            //browser.evaluate("alert(testFunction('testing java-js integration'))");
+                            
+                            //browser.evaluate("startDownload('magnet:?xt=urn:btih:4d09aa8fbf18433559d8ffcb9fd6ec75fb695eb0&dn=Californication+S03E01+DVDSCR+XviD-FFNDVD+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.ccc.de%3A80')");
                         }
 
                         @Override
@@ -101,6 +106,7 @@ public class BrowserCtl extends JPanel {
                     });
 
                     testFunction = new TestFunction(browser);
+                    startDownload = new StartDownload(browser);
                 }
             });
 
@@ -123,6 +129,11 @@ public class BrowserCtl extends JPanel {
                         if (!testFunction.isDisposed()) {
                             testFunction.dispose();
                         }
+                        
+                        if (!startDownload.isDisposed()) {
+                            startDownload.dispose();
+                        }
+                        
                         browser.getDisplay().dispose();
                     }
                 });
@@ -237,6 +248,20 @@ public class BrowserCtl extends JPanel {
         }
     }
 
+    private static class StartDownload extends BrowserFunction {
+
+        public StartDownload(Browser browser) {
+            super(browser, "startDownload");
+        }
+        
+        @Override
+        public Object function(Object[] arguments) {
+            System.out.println("StartDownload invoked. ("+arguments[0]+")");
+              GUIMediator.instance().openTorrentURI((String) arguments[0]);
+              return true;
+        }
+    }
+    
     private static class TestFunction extends BrowserFunction {
 
         public TestFunction(Browser browser) {
@@ -245,6 +270,7 @@ public class BrowserCtl extends JPanel {
 
         @Override
         public Object function(Object[] arguments) {
+            System.out.println("BrowserCtl.TestFunction invoked.");
             return arguments[0];
         }
     }
