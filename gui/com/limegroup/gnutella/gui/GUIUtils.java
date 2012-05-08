@@ -591,7 +591,11 @@ public final class GUIUtils {
             return false;
         }
         
-        if (extension != null && extension.equals("mp4")) {
+        extension = extension.toLowerCase();
+        
+        if (extension != null
+                && (extension.equals("mp4") || extension.equals("flv") || extension.equals("webm") || extension.equals("mkv") || extension.equals("mov") || extension.equals("mkv") || extension
+                        .equals("mpeg") || extension.equals("avi"))) {
             GUIMediator.instance().setWindow(Tabs.MEDIA_PLAYER);
             VlcPlayer.instance().open(file.getAbsolutePath());
             return true;
