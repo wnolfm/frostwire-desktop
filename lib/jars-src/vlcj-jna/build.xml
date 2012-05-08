@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="vlcj-jna" default="main" basedir=".">
+
+	<target name="main">
+		<mkdir dir="bin" />
+
+		<!-- build -->
+		<javac srcdir="src" destdir="bin" fork="true" includeantruntime="false" debug="false">
+		</javac>
+
+		<!-- jar -->
+		<jar jarfile="vlcj-jna.jar" level="9">
+			<fileset dir="bin" />
+		</jar>
+
+	</target>
+
+	<target name="clean">
+
+		<delete dir="bin" />
+
+	</target>
+
+</project>
