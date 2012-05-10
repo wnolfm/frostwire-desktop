@@ -34,6 +34,7 @@ import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryTab;
+import com.frostwire.gui.tabs.MediaPlayerTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
 import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
@@ -287,6 +288,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryTab(getLibraryMediator()));
         TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
+        TABS.put(GUIMediator.Tabs.MEDIA_PLAYER, new MediaPlayerTab());
 	    
 	    TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
 	    

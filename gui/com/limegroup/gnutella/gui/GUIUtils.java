@@ -49,7 +49,9 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.VlcPlayer;
 import com.limegroup.gnutella.SpeedConstants;
+import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
@@ -587,6 +589,16 @@ public final class GUIUtils {
         if(extension != null && extension.equals("torrent")) {
             GUIMediator.instance().openTorrentFile(file);
             return false;
+        }
+        
+        extension = extension.toLowerCase();
+        
+        if (extension != null
+                && (extension.equals("mp4") || extension.equals("flv") || extension.equals("webm") || extension.equals("mkv") || extension.equals("mov") || extension.equals("mkv") || extension
+                        .equals("mpeg") || extension.equals("avi"))) {
+            GUIMediator.instance().setWindow(Tabs.MEDIA_PLAYER);
+            VlcPlayer.instance().open(file.getAbsolutePath());
+            return true;
         }
         
         if (GUIMediator.isPlaylistVisible()) {

@@ -36,5 +36,10 @@
 	<classpathentry kind="lib" path="lib/jars/h2-1.3.164.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/lucene-3.5.0.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/swt-webbrowser-mac.jar" sourcepath="lib/jars-src/swt-webbrowser/swt-webbrowser-mac"/>
+	<classpathentry kind="lib" path="lib/jars/vlcj-jna.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
