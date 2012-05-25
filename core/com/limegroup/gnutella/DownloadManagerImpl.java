@@ -3,9 +3,10 @@ package com.limegroup.gnutella;
 import java.io.File;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.global.GlobalManager;
 
 import com.frostwire.AzureusStarter;
@@ -13,6 +14,8 @@ import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
 public class DownloadManagerImpl implements DownloadManager {
+    
+    private static final Log LOG = LogFactory.getLog(DownloadManagerImpl.class);
     
     /**
      * The average bandwidth over all downloads.
@@ -64,17 +67,12 @@ public class DownloadManagerImpl implements DownloadManager {
             }
         }
 
-//        Collections.sort(downloads, new Comparator<org.gudy.azureus2.core3.download.DownloadManager>() {
-//            public int compare(org.gudy.azureus2.core3.download.DownloadManager o1, org.gudy.azureus2.core3.download.DownloadManager o2) {
-//                return Long.valueOf(o1.getCreationTime()).compareTo(Long.valueOf(o2.getCreationTime()));
-//            }
-//        });
-
         for (org.gudy.azureus2.core3.download.DownloadManager obj : downloads) {
 
             org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
 
             if (downloadManager.getSaveLocation().getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
+                LOG.info("Update download: " + downloadManager.getSaveLocation());
                 continue;
             }
 
@@ -86,12 +84,6 @@ public class DownloadManagerImpl implements DownloadManager {
 
             addDownloaderManager(downloadManager);
         }
-    }
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#killDownloadersNotListed(java.util.Collection)
-     */
-    public synchronized void killDownloadersNotListed(Collection<? extends DownloadInformation> updates) {
     }
 
     /**

@@ -30,6 +30,8 @@ import javax.swing.JOptionPane;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
+import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -38,6 +40,11 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 final class BTDownloadActions {
 
     static final ShowDetailsAction SHOW_DETAILS_ACTION = new ShowDetailsAction();
@@ -54,6 +61,7 @@ final class BTDownloadActions {
     static final SendBTDownloaderAudioFilesToiTunes SEND_TO_ITUNES_ACTION = new SendBTDownloaderAudioFilesToiTunes();
     static final ToggleSeedsVisibilityAction TOGGLE_SEEDS_VISIBILITY_ACTION = new ToggleSeedsVisibilityAction();
     static final ShareTorrentAction SHARE_TORRENT_ACTION = new ShareTorrentAction();
+    static final PlaySingleAudioFileAction PLAY_SINGLE_AUDIO_FILE_ACTION = new PlaySingleAudioFileAction();
 
     private static class SendBTDownloaderAudioFilesToiTunes extends AbstractAction {
 
@@ -436,6 +444,25 @@ final class BTDownloadActions {
 
             LibraryUtils.createNewPlaylist(playlistFiles.toArray(new File[0]));
 
+        }
+    }
+    
+    static final class PlaySingleAudioFileAction extends AbstractAction {
+        
+        private static final long serialVersionUID = -3628469680044329612L;
+
+        public PlaySingleAudioFileAction() {
+            super(I18n.tr("Play audio file"));
+            putValue(Action.LONG_DESCRIPTION,I18n.tr("Play Audio file"));
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            File file = BTDownloadMediator.instance().getSelectedDownloaders()[0].getSaveLocation();
+            
+            if (AudioPlayer.isPlayableFile(file)) {
+                AudioPlayer.instance().loadSong(new AudioSource(file),true,false);
+            }
         }
     }
 
