@@ -143,7 +143,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      * Specialized constructor for creating a "dummy" result panel.
      * This should only be called once at search window creation-time.
      */
-    SearchResultMediator(JPanel overlay) {
+    SearchResultMediator(Component overlay) {
         super(SEARCH_TABLE);
         setupFakeTable(overlay);
 
@@ -873,7 +873,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      * Adds the overlay panel into the table & converts the button
      * to 'download'.
      */
-    private void setupFakeTable(JPanel overlay) {
+    private void setupFakeTable(Component overlay) {
         MAIN_PANEL.removeAll();
         
         //Fixes flickering!

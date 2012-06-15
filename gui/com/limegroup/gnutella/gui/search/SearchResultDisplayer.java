@@ -43,6 +43,8 @@ import javax.swing.plaf.TabbedPaneUI;
 
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
+import com.frostwire.gui.webbrowser.BrowserFactory;
+import com.frostwire.gui.webbrowser.WebBrowser;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -116,7 +118,9 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     private final PaneListener PANE_LISTENER = new PaneListener();
 
     private SlideshowPanel promoSlides;
-
+    private Component browserComponent;
+    private WebBrowser browser;
+    
     /**
      * Constructs the search display elements.
      */
@@ -151,7 +155,21 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
             promoSlides.setSize(promoDimensions);
             promoSlides.setMaximumSize(promoDimensions);
 
-            DUMMY = new SearchResultMediator(promoSlides);
+            // test for web browser
+
+            
+            browser = BrowserFactory.instance().createBrowser();
+            browserComponent = browser.getComponent();
+            browserComponent.setBackground(Color.WHITE);
+            Dimension d = new Dimension(717, 380);
+            browserComponent.setPreferredSize(d);
+            browserComponent.setSize(d);
+            browserComponent.setMaximumSize(d);
+            
+            browser.go("http://www.frostwire.com");
+            
+            //DUMMY = new SearchResultMediator(promoSlides);
+            DUMMY = new SearchResultMediator(browserComponent);
 
             mainScreen = new JPanel(new BorderLayout());
             promoSlides.setupContainerAndControls(mainScreen, true);
@@ -315,7 +333,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         //if (OVERLAY != null)
         // 	OVERLAY.searchPerformed();
 
-        promoSlides.setVisible(false);
+        //promoSlides.setVisible(false);
+        browserComponent.setVisible(false);
         switcher.last(results); //show tabbed results
 
         // If there are lots of tabs, this ensures everything
@@ -521,7 +540,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         if (entries.size() == 0) {
             try {
-                promoSlides.setVisible(true);
+                //promoSlides.setVisible(true);
+                browserComponent.setVisible(true);
                 switcher.first(results); //show dummy table
             } catch (ArrayIndexOutOfBoundsException aioobe) {
                 //happens on jdk1.5 beta w/ windows XP, ignore.
