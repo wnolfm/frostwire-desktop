@@ -101,6 +101,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private Action copyHashAction;
     private Action shareTorrentAction;
     private Action showInLibraryAction;
+    private Action clearInactiveAction;
 
     /** The actual download buttons instance.
      */
@@ -136,6 +137,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     protected void buildListeners() {
         super.buildListeners();
 
+        clearInactiveAction = BTDownloadActions.CLEAR_INACTIVE_ACTION;
         removeAction = BTDownloadActions.REMOVE_ACTION;
         removeYouTubeAction = BTDownloadActions.REMOVE_YOUTUBE_ACTION;
         resumeAction = BTDownloadActions.RESUME_ACTION;
@@ -156,7 +158,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     public Action[] getActions() {
         Action[] actions;
         if (OSUtils.isWindows() || OSUtils.isMacOSX())
-            actions = new Action[] { resumeAction, pauseAction, showInLibraryAction, exploreAction, removeAction };
+            actions = new Action[] { resumeAction, pauseAction, showInLibraryAction, exploreAction, removeAction, clearInactiveAction };
         else
             actions = new Action[] { resumeAction, pauseAction, removeAction };
 
@@ -286,6 +288,19 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             exploreAction.setEnabled(completed);
             showInLibraryAction.setEnabled(completed);
         }
+        
+        int n = DATA_MODEL.getRowCount();
+        boolean anyClearable = false;
+		for (int i=n-1; i >= 0; i--) {
+			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+			BTDownload initializeObject = btDownloadDataLine.getInitializeObject();
+			if (isClearable(initializeObject)) {
+				anyClearable = true;
+				break;
+			}
+		}
+        
+		clearInactiveAction.setEnabled(anyClearable);
     }
 
     public int getActiveDownloads() {
@@ -636,6 +651,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     public void handleNoSelection() {
         removeAction.setEnabled(false);
         resumeAction.setEnabled(false);
+        clearInactiveAction.setEnabled(false);
         pauseAction.setEnabled(false);
         exploreAction.setEnabled(false);
         showInLibraryAction.setEnabled(false);
@@ -771,7 +787,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public BTDownload[] getSelectedDownloaders() {
-        int[] sel = TABLE.getSelectedRows();
+    	int[] sel = TABLE.getSelectedRows();
         ArrayList<BTDownload> downloaders = new ArrayList<BTDownload>(sel.length);
         for (int i = 0; i < sel.length; i++) {
             BTDownloadDataLine line = DATA_MODEL.get(sel[i]);
@@ -803,18 +819,23 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return azureusCore.getGlobalManager().getStats().getTotalDataBytesSent();
     }
 
-    //
-    //	public void removeCompleted() {
-    //		int n = DATA_MODEL.getRowCount();
-    //		for (int i=n-1; i >= 0; i--) {
-    //			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
-    //			BTDownloader initializeObject = btDownloadDataLine.getInitializeObject();
-    //			if (initializeObject.isCompleted()) {
-    //				DATA_MODEL.remove(i);
-    //			}			
-    //		}		
-    //	}
-    //	
+    public boolean isClearable(BTDownload initializeObject) {
+        int state = initializeObject.getState();
+        return state != DownloadManager.STATE_SEEDING && state != DownloadManager.STATE_CHECKING && initializeObject.isCompleted();
+    }
+    
+	public void removeCompleted() {
+		int n = DATA_MODEL.getRowCount();
+		for (int i=n-1; i >= 0; i--) {
+			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+			BTDownload initializeObject = btDownloadDataLine.getInitializeObject();
+			
+			if (isClearable(initializeObject)) {
+			    DATA_MODEL.remove(i);
+			}			
+		}		
+	}
+	
     public void stopCompleted() {
         int n = DATA_MODEL.getRowCount();
         for (int i = n - 1; i >= 0; i--) {
@@ -824,8 +845,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 initializeObject.pause();
             }
         }
+        
     }
-
+    
     public boolean isDownloading(String hash) {
         return DATA_MODEL.isDownloading(hash);
     }
