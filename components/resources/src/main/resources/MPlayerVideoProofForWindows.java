@@ -15,6 +15,7 @@ public class MPlayerVideoProofForWindows {
 	public static void main(String[] args) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
 		
 		JFrame frame = new JFrame();
+		frame.setLayout(new BorderLayout());
 		Dimension d = new Dimension(1024,768);
 		frame.setPreferredSize(d);
 		frame.setMinimumSize(d);
@@ -27,14 +28,20 @@ public class MPlayerVideoProofForWindows {
 		overlay.setPreferredSize(new Dimension(100,100));
 		overlay.setVisible(true);
 		overlay.setBackground(Color.RED);
-		overlay.setEnabled(true);
-		overlay.setLocation(10,10);
+		overlay.setEnabled(true);		
+		//jLayered pane needs you to use setBounds on its components, otherwise they're not shown
+		overlay.setBounds(0, 0, (int) d.getWidth(), (int) d.getHeight());
+		
+		overlay.setIgnoreRepaint(true);
 		
 		JPanel p = new JPanel(new FlowLayout());
-		p.setMinimumSize(new Dimension(400,400));
-		p.add(new JButton("Some Button Here"));
-		p.add(new JButton("Another Button"));
+		p.setMinimumSize(new Dimension(400,100));
+		p.setPreferredSize(new Dimension(400,100));
+		p.add(new JButton("Button on First Panel"));		
 		p.setVisible(true);
+		p.setBounds(200,d.height-400,400,100);
+		p.setBackground(new Color(200,0,0,128)); //background color with alpha
+		//p.setOpaque(false);
 		
 		//The container for the video and other overlays.
 		JLayeredPane layeredPane = new JLayeredPane();
@@ -42,10 +49,12 @@ public class MPlayerVideoProofForWindows {
 		layeredPane.setMinimumSize(d);
 		layeredPane.setOpaque(true);
 		layeredPane.setVisible(true);
-		layeredPane.add(overlay,JLayeredPane.DEFAULT_LAYER);
 		
+		//it's VERY important the order in which elements are added.
+		//try flipping these two lines.
+		layeredPane.add(p);
+		layeredPane.add(overlay);
 
-		layeredPane.add(p,1);
 		
 		frame.getContentPane().add(layeredPane,BorderLayout.CENTER);
 		frame.setVisible(true);
@@ -58,8 +67,7 @@ public class MPlayerVideoProofForWindows {
 	    java.lang.reflect.Field f = cl.getDeclaredField("hwnd");
 	    f.setAccessible(true); //little reflection hack to access the hwnd from windows.
 	    
-	    long hWnd = f.getLong(window.getPeer());
-		//long hWnd = f.getLong(overlay.getPeer());
+		long hWnd = f.getLong(overlay.getPeer());
 	    
 		try{ 
 			  String[] cmd = {"mplayer.exe","-wid",String.valueOf(hWnd),"-colorkey","0x010101","video.mp4"};
@@ -69,8 +77,6 @@ public class MPlayerVideoProofForWindows {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
-		;
 		
 	}
 }
